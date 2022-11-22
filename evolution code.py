@@ -1,5 +1,5 @@
-from calendar import c
-from os import sep
+# from calendar import c
+# from os import sep
 from random import randint, random
 import numpy as np
 import matplotlib.pyplot as plt
@@ -102,7 +102,7 @@ for i in range((steps- 1) * indiv):  #  Основной цикл создани
             count_pr = sum(i) / len(population)
             if best < sum(i):
                 best = sum(i)
-                best_p.append(i)
+                best_p.append(best)
                 best_count += 1
         count_str.append(count_pr)
         num_generation += 1
@@ -117,7 +117,6 @@ for i in range((steps- 1) * indiv):  #  Основной цикл создани
 for ex in range(len(count_str) + 1):
     count_str_x = list(range(1, ex + 1))
 #  print(count_str_x, "len str x")
-#  
 #  print(count_str, "пригодность")
 print(child)
 
@@ -133,8 +132,9 @@ print(num_generation, "num_generation")
 figure, axis = plt.subplots(2)
 x = count_str_x
 y = count_str
-x1 = best_p
-y1 = best_p_x
+x1 = best_p_x
+y1 = best_p
+print(best_p,  best_p_x)
 axis[0].plot(x, y)
 axis[1].plot(x1, y1)
 
