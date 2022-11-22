@@ -4,6 +4,7 @@ from random import randint, random
 import numpy as np
 import matplotlib.pyplot as plt
 
+temp_count_pr = 0
 child = []
 count = 0
 count2 = 0
@@ -14,15 +15,11 @@ parent2 = []
 population = []
 countc = 0
 count_str = []
-count_pr = 0
 indiv = int(input("сколько хотите индивидов?  "))
 dlin = int(input("длина индивидов  "))
 steps = int(input("кол-во поколений  "))
 sep_population = []
 count_str_x = []
-count_str.append(count_pr)
-num_generation = 0
-count_str_x.append(num_generation)
 best_p = []
 best_count = 0
 
@@ -33,7 +30,15 @@ for i in range(indiv):
         c1.append(a)
     population.append(c1)
 print(population, "первая")
-num_generation += 1
+
+for i in population:
+    temp_count_pr = temp_count_pr + sum(i)
+    if best <= sum(i):
+        best = sum(i)
+count_str.append(temp_count_pr / indiv)
+best_p.append(best)
+
+
 for i in range((steps- 1) * indiv):  #  Основной цикл создания популяций
 #  while countc < dlin:
     fp = population[randint(0, len(population) - 1)]  #  Турнирный метод отбора родителей
@@ -99,20 +104,21 @@ for i in range((steps- 1) * indiv):  #  Основной цикл создани
     
     if len(population) == len(sep_population):
         for i in population:
-            count_pr = sum(i) / len(population) * 10
             if best <= sum(i):
                 best = sum(i)
-                best_p.append(best)
-        count_str.append(count_pr)
-        num_generation += 1
-        count_str_x.append(num_generation)
+            temp_count_pr += sum(i)
+
+        # count_pr = temp_count_pr / indiv
+        best_p.append(best)
+        count_str.append(temp_count_pr / indiv)
+
+        # count_str_x.append(num_generation)
         population = sep_population.copy()
         sep_population = []
 
 
 
-
-    #  count_pr = 0
+    temp_count_pr = 0
     #  print(population, "популяция")
 
 
@@ -126,9 +132,10 @@ print(child)
 
 for ex in range(len(best_p) + 1):
     best_p_x = list(range(1, ex + 1))
-print(best_p, best_p_x, "best_count")
-print(len(count_str), count_str_x)
-print(num_generation, "num_generation")
+# print(population)
+# print(best_p, best_p_x, "best_count")
+print(count_str, 'count str ') #  , count_str_x)
+# print(num_generation, "num_generation")
 
 
 figure, axis = plt.subplots()
@@ -141,7 +148,7 @@ y1 = best_p
 print(best_p,  best_p_x)
 axis.plot(x, y, linewidth=2.0)
 axis.plot(x1, y1)
-axis.set(xlim = (0, len(count_str_x)))
+axis.set(xlim = (0, len(best_p_x) + 1))
 
 
 plt.show()
