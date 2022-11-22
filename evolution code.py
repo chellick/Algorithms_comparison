@@ -99,17 +99,19 @@ for i in range((steps- 1) * indiv):  #  Основной цикл создани
     
     if len(population) == len(sep_population):
         for i in population:
-            count_pr = sum(i) / len(population)
-            if best < sum(i):
+            count_pr = sum(i) / len(population) * 10
+            if best <= sum(i):
                 best = sum(i)
                 best_p.append(best)
-                best_count += 1
         count_str.append(count_pr)
         num_generation += 1
         count_str_x.append(num_generation)
         population = sep_population.copy()
         sep_population = []
-        
+
+
+
+
     #  count_pr = 0
     #  print(population, "популяция")
 
@@ -129,13 +131,17 @@ print(len(count_str), count_str_x)
 print(num_generation, "num_generation")
 
 
-figure, axis = plt.subplots(2)
+figure, axis = plt.subplots()
+
+
 x = count_str_x
 y = count_str
 x1 = best_p_x
 y1 = best_p
 print(best_p,  best_p_x)
-axis[0].plot(x, y)
-axis[1].plot(x1, y1)
+axis.plot(x, y, linewidth=2.0)
+axis.plot(x1, y1)
+axis.set(xlim = (0, len(count_str_x)))
+
 
 plt.show()
