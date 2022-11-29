@@ -41,43 +41,26 @@ best_p.append(best)
 
 for i in range((steps- 1) * indiv):  #  Основной цикл создания популяций
 #  while countc < dlin:
-    fp = population[randint(0, len(population) - 1)]  #  Турнирный метод отбора родителей
+    fp = population[randint(0, len(population) - 1)]  # Турнирный метод отбора родителей
     sp = population[randint(0, len(population) - 1)]
-
-    for i in fp:
-        if i == 1:
-            count += 1
-    for i in sp:
-        if i == 1:
-            count2 += 1
-    if count > count2:
-        parent1 = fp
-    elif count == count2:
+#>--------------------------------------------------------------------------------------------------------
+    if sum(fp) >= sum(sp):
         parent1 = fp
     else:
         parent1 = sp
-    #  print(count, count2)
-    count = 0
-    count2 = 0
 
     fp = population[randint(0, len(population) - 1)] #  выборка индивидов из массива population
     sp = population[randint(0, len(population) - 1)]
 
-    for i in fp:
-        if i == 1:
-            count += 1
-    for i in sp:
-        if i == 1:
-            count2 += 1
-    if count > count2:
-        parent2 = fp
-    elif count == count2:
+
+    if sum(fp) >= sum(sp):
         parent2 = fp
     else:
         parent2 = sp
-    count = 0
-    count2 = 0
 
+    fp = population[randint(0, len(population) - 1)]  # выборка индивидов из массива population
+    sp = population[randint(0, len(population) - 1)]
+#>--------------------------------------------------------------------------------------------------------
     rand = randint(0, dlin - 1)  # Метод выборки ребенка путем скрещивания частей генотипа родителей
     fh = parent1[:rand]  # first half
     sh = parent2[rand::]  # second half
@@ -101,7 +84,7 @@ for i in range((steps- 1) * indiv):  #  Основной цикл создани
     sep_population.append(child)  # Добавление ребенка в список
     #  print(sep_population, "changed population")
     #  print(population, " популяция ", sep_population, " дочерняя популяция ")
-    
+#>--------------------------------------------------------------------------------------------------------
     if len(population) == len(sep_population):
         for i in population:
             if best <= sum(i):
@@ -120,7 +103,7 @@ for i in range((steps- 1) * indiv):  #  Основной цикл создани
 
     temp_count_pr = 0
     #  print(population, "популяция")
-
+#>--------------------------------------------------------------------------------------------------------
 
 for ex in range(len(count_str) + 1):
     count_str_x = list(range(1, ex + 1))
@@ -136,7 +119,7 @@ for ex in range(len(best_p) + 1):
 # print(best_p, best_p_x, "best_count")
 print(count_str, 'count str ') #  , count_str_x)
 # print(num_generation, "num_generation")
-
+#>--------------------------------------------------------------------------------------------------------
 
 figure, axis = plt.subplots()
 
