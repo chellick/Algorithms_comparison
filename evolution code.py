@@ -23,6 +23,11 @@ count_str_x = []
 best_p = []
 best_count = 0
 
+#>--------------------------------------------------------------------------------------------------------
+
+def fitness(individ):
+    return sum(individ)
+
 for i in range(indiv):
     c1 = []
     for i in range(dlin):
@@ -41,19 +46,23 @@ best_p.append(best)
 
 for i in range((steps- 1) * indiv):  #  Основной цикл создания популяций
 #  while countc < dlin:
+#>--------------------------------------------------------------------------------------------------------
     fp = population[randint(0, len(population) - 1)]  # Турнирный метод отбора родителей
     sp = population[randint(0, len(population) - 1)]
-#>--------------------------------------------------------------------------------------------------------
-    if sum(fp) >= sum(sp):
+
+    if fitness(fp) >= fitness(sp):
         parent1 = fp
     else:
         parent1 = sp
+
+
+
 
     fp = population[randint(0, len(population) - 1)] #  выборка индивидов из массива population
     sp = population[randint(0, len(population) - 1)]
 
 
-    if sum(fp) >= sum(sp):
+    if fitness(fp) >= fitness(sp):
         parent2 = fp
     else:
         parent2 = sp
@@ -87,9 +96,9 @@ for i in range((steps- 1) * indiv):  #  Основной цикл создани
 #>--------------------------------------------------------------------------------------------------------
     if len(population) == len(sep_population):
         for i in population:
-            if best <= sum(i):
-                best = sum(i)
-            temp_count_pr += sum(i)
+            if best <= fitness(i):
+                best = fitness(i)
+            temp_count_pr += fitness(i)
 
         # count_pr = temp_count_pr / indiv
         best_p.append(best)
