@@ -1,8 +1,6 @@
 # from calendar import c
 # from os import sep
-from random import randint, random
-import numpy as np
-import matplotlib.pyplot as plt
+
 
 from random import randint, random
 import numpy as np
@@ -26,7 +24,8 @@ sep_population = []
 count_str_x = []
 best_p = []
 best_count = 0
-
+lst_fit = []
+lst_fit_temp = []
 
 # >--------------------------------------------------------------------------------------------------------
 
@@ -41,36 +40,39 @@ for i in range(indiv):
         c1.append(a)
     population.append(c1)
 print(population, "первая")
-
-
 for i in population:
-    if best <= fitness(i):
-        best = fitness(i)
-    temp_count_pr += fitness(i)
+    lst_fit.append(fitness(i))
+
+
+
+for i in lst_fit:
+    if best <= i:
+        best = i
+    temp_count_pr += i
 count_str.append(temp_count_pr / indiv)
 best_p.append(best)
 
 for i in range((steps - 1) * indiv):  # Основной цикл создания популяций
     #  while countc < dlin:
 # >--------------------------------------------------------------------------------------------------------
-    fp = population[randint(0, len(population) - 1)]  # Турнирный метод отбора родителей
-    sp = population[randint(0, len(population) - 1)]
+    fp = randint(0, len(population) - 1)  # Турнирный метод отбора родителей
+    sp = randint(0, len(population) - 1)
 
-    if fitness(fp) >= fitness(sp):
-        parent1 = fp
+    if lst_fit[fp] >= lst_fit[sp]:
+        parent1 = population[fp]
     else:
-        parent1 = sp
+        parent1 = population[sp]
 
-    fp = population[randint(0, len(population) - 1)]  # выборка индивидов из массива population
-    sp = population[randint(0, len(population) - 1)]
+    fp = randint(0, len(population) - 1)  # Турнирный метод отбора родителей
+    sp = randint(0, len(population) - 1)
 
-    if fitness(fp) >= fitness(sp):
-        parent2 = fp
+    if lst_fit[fp] >= lst_fit[sp]:
+        parent2 = population[fp]
     else:
-        parent2 = sp
+        parent2 = population[sp]
 
-    fp = population[randint(0, len(population) - 1)]  # выборка индивидов из массива population
-    sp = population[randint(0, len(population) - 1)]
+    # fp = population[randint(0, len(population) - 1)]  # выборка индивидов из массива population
+    # sp = population[randint(0, len(population) - 1)]
 # >--------------------------------------------------------------------------------------------------------
     rand = randint(0, dlin - 1)  # Метод выборки ребенка путем скрещивания частей генотипа родителей
     fh = parent1[:rand]  # first half
@@ -81,34 +83,23 @@ for i in range((steps - 1) * indiv):  # Основной цикл создани
         rand = random()
         if rand <= 0.02:
             child[i] = 1 if child[i] == 0 else 0
-    """
-    for i in child:  #  Нахождение количества едениц в генотипе ребёнка
-        if i == 1:
-            countc += 1
-    count_str.append(countc)
-    countc = 0
-
-    #  print(countc, d)
-
-    #  print(child, "child")
-    """
+    lst_fit_temp.append(fitness(child))
     sep_population.append(child)  # Добавление ребенка в список
-    #  print(sep_population, "changed population")
-    #  print(population, " популяция ", sep_population, " дочерняя популяция ")
-# >--------------------------------------------------------------------------------------------------------
-    if len(population) == len(sep_population):
-        for i in population:
-            if best <= fitness(i):
-                best = fitness(i)
-            temp_count_pr += fitness(i)
 
-        # count_pr = temp_count_pr / indiv
+ # >--------------------------------------------------------------------------------------------------------
+    if len(population) == len(sep_population):
+        for i in lst_fit:
+            if best <= i:
+                best = i
+            temp_count_pr += i
+
         best_p.append(best)
         count_str.append(temp_count_pr / indiv)
 
-        # count_str_x.append(num_generation)
+        lst_fit = lst_fit_temp.copy()
         population = sep_population.copy()
         sep_population = []
+        lst_fit_temp = []
 
     temp_count_pr = 0
     #  print(population, "популяция")
@@ -129,7 +120,6 @@ print(count_str, 'count str ')  # , count_str_x)
 # >--------------------------------------------------------------------------------------------------------
 
 figure, axis = plt.subplots()
-
 x = count_str_x
 y = count_str
 x1 = best_p_x
@@ -140,3 +130,4 @@ axis.plot(x1, y1)
 axis.set(xlim=(0, len(best_p_x) + 1))
 
 plt.show()
+
