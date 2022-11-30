@@ -26,7 +26,7 @@ best_p = []
 best_count = 0
 lst_fit = []
 lst_fit_temp = []
-
+best_individ = []
 # >--------------------------------------------------------------------------------------------------------
 
 def fitness(individ):
@@ -48,6 +48,9 @@ for i in population:
 for i in lst_fit:
     if best <= i:
         best = i
+        temp_index = lst_fit.index(i)
+        best_individ.append(population[temp_index])
+
     temp_count_pr += i
 count_str.append(temp_count_pr / indiv)
 best_p.append(best)
@@ -88,9 +91,12 @@ for i in range((steps - 1) * indiv):  # Основной цикл создани
 
  # >--------------------------------------------------------------------------------------------------------
     if len(population) == len(sep_population):
-        for i in lst_fit:
+        for i in lst_fit_temp:
             if best <= i:
                 best = i
+                temp_index = lst_fit_temp.index(i)
+                best_individ.append(sep_population[temp_index])
+
             temp_count_pr += i
 
         best_p.append(best)
@@ -103,20 +109,22 @@ for i in range((steps - 1) * indiv):  # Основной цикл создани
 
     temp_count_pr = 0
     #  print(population, "популяция")
+
 # >--------------------------------------------------------------------------------------------------------
 
 for ex in range(len(count_str) + 1):
     count_str_x = list(range(1, ex + 1))
-#  print(count_str_x, "len str x")
-#  print(count_str, "пригодность")
-print(child)
 
 for ex in range(len(best_p) + 1):
     best_p_x = list(range(1, ex + 1))
-# print(population)
-# print(best_p, best_p_x, "best_count")
-print(count_str, 'count str ')  # , count_str_x)
-# print(num_generation, "num_generation")
+
+best_individ = best_individ[::-1]
+del best_individ[1:]
+
+# >--------------------------------------------------------------------------------------------------------
+print(count_str, 'count str ')
+print(best_individ, 'best individ')
+print(child, 'child')
 # >--------------------------------------------------------------------------------------------------------
 
 figure, axis = plt.subplots()
