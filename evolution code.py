@@ -135,7 +135,7 @@ y1 = best_p
 print(best_p, best_p_x)
 axis.plot(x, y, linewidth=2.0)
 axis.plot(x1, y1)
-axis.set(xlim=(0, len(best_p_x) + 1))
+# axis.set(xlim=(0, len(best_p_x) + 1))
 
 plt.show()
 
