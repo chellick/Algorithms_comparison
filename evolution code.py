@@ -6,7 +6,6 @@ import math
 from random import randint, random
 import numpy as np
 import matplotlib.pyplot as plt
-import math
 
 temp_count_pr = 0
 child = []
