@@ -39,14 +39,14 @@ best = -math.inf
 def fitness(individ):
     s_individ = "".join(map(str, individ))
     int_individ = int(s_individ, 2)
-    float_individ = (int_individ / (2 ** len(individ) * (limit2 - limit1) + limit1))
+    float_individ = (int_individ / (2 ** len(individ) - 1)) * (limit2 - limit1) + limit1
     float_individ_y = -(float_individ ** 2)
     return float_individ_y
 
 def fitness_x(individ):
     s_individ = "".join(map(str, individ))
     int_individ = int(s_individ, 2)
-    float_individ = (int_individ / (2 ** len(individ) * (limit2 - limit1) + limit1))
+    float_individ = (int_individ / (2 ** len(individ) - 1)) * (limit2 - limit1) + limit1
     return float_individ
 # >--------------------------------------------------------------------------------------------------------
 
@@ -132,13 +132,13 @@ best_individ = best_individ[::-1]
 del best_individ[1:]
 
 # >--------------------------------------------------------------------------------------------------------
-print(count_str, 'count str ')
-print(best_individ, 'best individ')
-print(child, 'child')
+# print(count_str, 'count str ')
+# print(best_individ, 'best individ')
+# print(child, 'child')
 
 # >--------------------------------------------------------------------------------------------------------
 figure, axis = plt.subplots()
-x_one = np.linspace(-100, 100, 10)
+x_one = np.linspace(limit1, limit2, 10)
 y_one = [-(i**2) for i in x_one]
 x = best_p
 y = [-(i**2) for i in best_p]
