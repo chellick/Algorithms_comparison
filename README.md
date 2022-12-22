@@ -6,6 +6,7 @@ This is simple genetic algorythm based on randint input of (1, 0) to individual,
 
 ## Пример работы генетического алгоритмя (max func)
 ![image](https://user-images.githubusercontent.com/110192173/209186680-89db3b38-f4ec-466f-8b09-d3bce088b54b.png)
+
 Алгоритм позволяет пользователю вводить значения для ограничения функции 
 
 ![image](https://user-images.githubusercontent.com/110192173/209187010-b245a262-c86d-4f9f-8e00-8e0b14102d24.png)
