@@ -7,38 +7,38 @@ from random import randint, random
 import numpy as np
 import matplotlib.pyplot as plt
 
-temp_count_fit = 0
-child = []
+temp_count_fit = 0                    # Среднее значение float в итерации
+child = []                            # Ребёнок
 # count = 0
 # count2 = 0
-best = 0
-parent_one = []
-parent_two = []
-population = []
+best = 0                              # Сравнительная переменная (min\max)
+parent_one = []                       # 1 Участник в генерации потомка
+parent_two = []                       # 2 Участник в генерации потомка
+population = []                       # Оснвной массив популяции
 # countc = 0
-count_str = []
+# count_str = []
 count_individ = int(input("сколько хотите индивидов?  "))
 len_individ = int(input("длина индивидов  "))
 count_generations = int(input("кол-во поколений  "))
 mutation_probability = float(input("вероятность мутации   "))
-child_population = []
-count_str_x = []
-best_individ_array = []
+child_population = []                 # Сепарированная популяция
+# count_str_x = []
+best_individ_array = []               # Массив лучших детей
 # best_count = 0
-population_fit = []
-lst_fit_x = []
-lst_fit_temp = []
-best_individ = []
-best_individ_x = []
+population_fit = []                   # Массив детей в float форме
+# lst_fit_x = []
+lst_fit_temp = []                     # Сепарированный массив детей в float форме
+best_individ = []                     # Конечный массив лучших для Y
+best_individ_x = []                   # Конечный массив лучших для X
 limit_one = int(input("ограничение 1 "))
 limit_two = int(input("ограничение 2 "))
-best = -math.inf
+best = math.inf
 
 # >--------------------------------------------------------------------------------------------------------
 def function(x):
-     return ((x** 2 + x - 11) ** 2 + (x + x ** 2 - 7) ** 2) * (-1)
-# def function(x):
-#     return -(x-2)**2
+    return 0.05 * (x - 1) ** 2 + (3 - 2.9 * math.e ** (-2.77257 * x ** 2)) * (1 - math.cos(x * (4 - 50 * math.e ** (-2.77257 * x ** 2))))
+
+
 
 def fitness_one(indiv):
     s_individ = "".join(map(str, indiv))
@@ -47,13 +47,14 @@ def fitness_one(indiv):
     float_individ_y = function(float_individ)
     return float_individ_y
 
-
-
 def float_number(indiv):
-    s_indiv = "".join(map(str, indiv))
-    int_individ = int(s_indiv, 2)
+    s_individ = "".join(map(str, indiv))
+    int_individ = int(s_individ, 2)
+
     float_individ = (int_individ / (2 ** len(indiv) - 1)) * (limit_two - limit_one) + limit_one
     return float_individ
+
+
 # >--------------------------------------------------------------------------------------------------------
 
 for i in range(count_individ):
@@ -70,15 +71,15 @@ for i in population:
 
 
 for i in range(len(population_fit)):
-    if best <= population_fit[i]:
+    if best >= population_fit[i]:
         best = population_fit[i]
         index_ = i
     temp_count_fit += population_fit[i]
 
 best_individ.append(population[index_])
-count_str.append(temp_count_fit / count_individ)
+# count_str.append(temp_count_fit / count_individ)
 best_individ_array.append(best)
-best = -math.inf
+best = math.inf
 
 # >--------------------------------------------------------------------------------------------------------
 for i in range((count_generations - 1) * count_individ):  # Основной цикл создания популяций
@@ -87,7 +88,7 @@ for i in range((count_generations - 1) * count_individ):  # Основной ц�
     fp = randint(0, len(population) - 1)  # Турнирный метод отбора родителей
     sp = randint(0, len(population) - 1)
 
-    if population_fit[fp] >= population_fit[sp]:
+    if population_fit[fp] <= population_fit[sp]:
         parent_one = population[fp]
     else:
         parent_one = population[sp]
@@ -95,7 +96,7 @@ for i in range((count_generations - 1) * count_individ):  # Основной ц�
     fp = randint(0, len(population) - 1)  # Турнирный метод отбора родителей
     sp = randint(0, len(population) - 1)
 
-    if population_fit[fp] >= population_fit[sp]:
+    if population_fit[fp] <= population_fit[sp]:
         parent_two = population[fp]
     else:
         parent_two = population[sp]
@@ -116,23 +117,23 @@ for i in range((count_generations - 1) * count_individ):  # Основной ц�
     child_population.append(child)  # Добавление ребенка в список
 
 # >--------------------------------------------------------------------------------------------------------
-    best = -math.inf
+    best = math.inf
     if len(population) == len(child_population):
         for i in range(len(population_fit)):
-            if best <= lst_fit_temp[i]:
+            if best >= lst_fit_temp[i]:
                 best = lst_fit_temp[i]
                 index_ = i
             temp_count_fit += lst_fit_temp[i]
 
         best_individ_array.append(best)
-        count_str.append(temp_count_fit / count_individ)
+        # count_str.append(temp_count_fit / count_individ)
         best_individ.append(child_population[index_])
 
         population_fit = lst_fit_temp.copy()
         population = child_population.copy()
         child_population = []
         lst_fit_temp = []
-        best = -math.inf
+        best = math.inf
     temp_count_fit = 0
     #  print(population, "популяция")
 
@@ -140,8 +141,8 @@ for i in range((count_generations - 1) * count_individ):  # Основной ц�
 
 # >--------------------------------------------------------------------------------------------------------
 
-for ex in range(len(count_str) + 1):
-    count_str_x = list(range(1, ex + 1))
+# for ex in range(len(count_str) + 1):
+#     count_str_x = list(range(1, ex + 1))
 
 
 for i in best_individ:
@@ -149,12 +150,13 @@ for i in best_individ:
 
 
 # >--------------------------------------------------------------------------------------------------------
-print(count_str, 'count str ')
-print(best_individ, 'best_y count_individ')
-print(child, 'child')
+# print(count_str, 'count str ')
+# print(best_individ, 'best_y count_individ')
+# print(child, 'child')
 # >--------------------------------------------------------------------------------------------------------
+
 figure, axis = plt.subplots()
-x_one = np.linspace(limit_one, limit_two, 50)
+x_one = np.linspace(limit_one, limit_two, 1000)
 y_one = [function(i) for i in x_one]
 x = best_individ_x
 y = best_individ_array
