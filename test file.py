@@ -5,14 +5,16 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
-
-temp_count_fit = 0                    # Среднее значение float в итерации
-child = []                            # Ребёнок
-best = 0                              # Сравнительная переменная (min\max)
-parent_one = []                       # 1 Участник в генерации потомка
-parent_two = []                       # 2 Участник в генерации потомка
-population = []                       # Оснвной массив популяции
+temp_count_fit = 0  # Среднее значение float в итерации
+child = []  # Ребёнок
+best = 0  # Сравнительная переменная (min\max)
+parent_one = []  # 1 Участник в генерации потомка
+parent_two = []  # 2 Участник в генерации потомка
+population = []  # Оснвной массив популяции
 count_str = []
+final_x = -math.inf
+final_y = -math.inf
+
 count_individ = int(input("сколько хотите индивидов?  "))
 len_individ = int(input("длина индивидов  "))
 count_generations = int(input("кол-во поколений  "))
@@ -30,14 +32,15 @@ limit_one = int(input("ограничение 1 "))
 limit_two = int(input("ограничение 2 "))
 best = -math.inf
 
+
 # >--------------------------------------------------------------------------------------------------------
 def function(x1, x2):
-    return -(((x1 ** 2) + 2) + ((x2 ** 2) + 2))                                 # Задание фунции
+    # return -((x1 ** 2) + (x2 ** 2))
+    # return -(((x1 ** 2) + 2) - ((x2 ** 2) + 2))                                 # Задание фунции
+    return np.cos(x1 + x2)
+    # return -np.sin(10 * (x1 ** 2 + x2 ** 2))
 
-# def function(x):
-#     return -(x-2)**2
-
-def fitness_one(indiv):                                         # Значение Y (Z)
+def fitness_one(indiv):  # Значение Y (Z)
     s_indiv = "".join(map(str, indiv))
     int_individ_one = int(s_indiv[:len(s_indiv) // 2 + 1], 2)
     int_individ_two = int(s_indiv[len(s_indiv) // 2:], 2)
@@ -50,7 +53,8 @@ def fitness_one(indiv):                                         # Значени
     float_individ_y = function(float_individ_one, float_individ_two)
     return float_individ_y
 
-def float_number(indiv):                                        # Tuple X1, X2 (X, Y)
+
+def float_number(indiv):  # Tuple X1, X2 (X, Y)
     s_indiv = "".join(map(str, indiv))
     int_individ_one = int(s_indiv[:len(s_indiv) // 2 + 1], 2)
     int_individ_two = int(s_indiv[len(s_indiv) // 2:], 2)
@@ -70,11 +74,8 @@ for i in range(count_individ):
         num_individ.append(a)
     population.append(num_individ)
 
-
-
 for i in population:
     population_fit.append(fitness_one(i))
-
 
 for i in range(len(population_fit)):
     if best <= population_fit[i]:
@@ -90,7 +91,7 @@ best = -math.inf
 # >--------------------------------------------------------------------------------------------------------
 for i in range((count_generations - 1) * count_individ):  # Основной цикл создания популяций
     #  while countc < len_individ:
-# >--------------------------------------------------------------------------------------------------------
+    # >--------------------------------------------------------------------------------------------------------
     fp = randint(0, len(population) - 1)  # Турнирный метод отбора родителей
     sp = randint(0, len(population) - 1)
 
@@ -109,7 +110,7 @@ for i in range((count_generations - 1) * count_individ):  # Основной ц�
 
     # fp = population[randint(0, len(population) - 1)]  # выборка индивидов из массива population
     # sp = population[randint(0, len(population) - 1)]
-# >--------------------------------------------------------------------------------------------------------
+    # >--------------------------------------------------------------------------------------------------------
     rand = randint(0, len_individ - 1)  # Метод выборки ребенка путем скрещивания частей генотипа родителей
     fh = parent_one[:rand]  # first half
     sh = parent_two[rand::]  # second half
@@ -122,7 +123,7 @@ for i in range((count_generations - 1) * count_individ):  # Основной ц�
     lst_fit_temp.append(fitness_one(child))
     child_population.append(child)  # Добавление ребенка в список
 
-# >--------------------------------------------------------------------------------------------------------
+    # >--------------------------------------------------------------------------------------------------------
     best = -math.inf
     if len(population) == len(child_population):
         for i in range(len(population_fit)):
@@ -150,34 +151,52 @@ for i in range((count_generations - 1) * count_individ):  # Основной ц�
 for ex in range(len(count_str) + 1):
     count_str_x = list(range(1, ex + 1))
 
-
 for i in best_individ:
     best_individ_x_one.append(float_number(i)[0])
-for i in best_individ:
     best_individ_x_two.append(float_number(i)[1])
 
 
-fig, ax = plt.subplots(subplot_kw={'projection':'3d'})
+extra_val_index = []
+for i in range(len(best_individ_x_two)):
+    if best_individ_x_two[i] < limit_one or best_individ_x_two[i] > limit_two:
+        extra_val_index.append(i)
+extra_val_index = extra_val_index[::-1]
+for i in extra_val_index:
+    best_individ_x_one.pop(i)
+    best_individ_x_two.pop(i)
+    best_individ_array.pop(i)
+
+# >--------------------------------------------------------------------------------------------------------
+
+
+fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
 
 x1 = best_individ_x_one
 y1 = best_individ_x_two
 z1 = best_individ_array
 # size = 100
-ax.scatter(x1, y1, z1, s = 100)
+ax.scatter(x1, y1, z1, s=100)
 
-print(max(x1), max(y1))
-print(x1, '\n', y1)
+ax.set_xlim3d(limit_one, limit_two)
+ax.set_ylim3d(limit_one, limit_two)
 
-x = np.arange(limit_one, limit_two, 0.1)
-y = np.arange(limit_one, limit_two, 0.1)
 
-x, y = np.meshgrid(x, y)
-z = function(x, y)
-# print(z)
 
-surf = ax.plot_surface(x, y, z, cmap = cm.coolwarm, linewidth=0, antialiased=False)
+# print(x1, '\n', y1, '\n', z1)
 
-plt.xlabel('x-axis', fontsize=6)
-plt.ylabel('y-axis', fontsize=6)
+x = np.arange(limit_one, limit_two, 0.3)
+y = np.arange(limit_one, limit_two, 0.3)
+
+x, y = np.meshgrid(y, x)
+z = function(y, x)
+
+surf = ax.plot_surface(y, x, z, cmap=cm.Greys, linewidth=0, antialiased=False)
+
+plt.xlabel('x', fontsize=6)
+plt.ylabel('y', fontsize=6)
+
+plt.xlim(limit_one, limit_two)
+plt.ylim(limit_one, limit_two)
 
 plt.show()
+
