@@ -36,9 +36,9 @@ best = -math.inf
 
 # >--------------------------------------------------------------------------------------------------------
 def function(x1, x2):
-    return -((x1 ** 2) + (x2 ** 2))
+    # return -((x1 ** 2) + (x2 ** 2))
     # return -(((x1 ** 2) + 2) - ((x2 ** 2) + 2))                                 # Задание фунции
-    # return np.cos(x1 + x2)
+    return np.cos(x1 + x2)
     # return -np.sin(10 * (x1 ** 2 + x2 ** 2))
 
 def fitness_one(indiv):  # Значение Y (Z)
@@ -176,7 +176,7 @@ x1 = best_individ_x_one
 y1 = best_individ_x_two
 z1 = best_individ_array
 # size = 100
-ax.scatter(x1, y1, z1, s=100)
+ax.scatter(y1, x1, z1, s=100)
 
 
 ax.set_xlim3d(limit_one, limit_two)
@@ -186,8 +186,8 @@ ax.set_ylim3d(limit_one, limit_two)
 
 # print(x1, '\n', y1, '\n', z1)
 
-x = np.arange(limit_one, limit_two, 0.3)
-y = np.arange(limit_one, limit_two, 0.3)
+x = np.arange(limit_one, limit_two, 0.2)
+y = np.arange(limit_one, limit_two, 0.2)
 
 x, y = np.meshgrid(y, x)
 z = function(y, x)
@@ -199,10 +199,6 @@ plt.ylabel('y', fontsize=6)
 
 plt.xlim(limit_one, limit_two)
 plt.ylim(limit_one, limit_two)
-
-
-
-
 
 plt.show()
 
