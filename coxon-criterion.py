@@ -1,5 +1,5 @@
-a = [50, 41, 45, 12, 74, 56]
-b = [13, 78, 50, 50, 46, 70, 90]
+a = [7, 8, 3, 6]
+b = [5, 1, 2, 3, 8]
 c = []
 t = []
 
@@ -23,24 +23,29 @@ for i in c:
     count += 1
 
 temp = []
+row = []
 
 for i in range(len(c) - 1):
     if c[i][0] == c[i + 1][0]:
-        temp.append(c[i][-1])
-
+        row.append(c[i][-1])
+        row.append(c[i + 1][-1])
+        temp.append(row)
     if c[i][0] != c[i + 1][0] and c[i][0] == c[i - 1][0]:
-        temp.append(c[i][-1])
+        if c[i][-1] not in row:
+            row.append(c[i][-1])
+            temp.append(row)
+        row = []
 
-S = int(sum(temp) / len(temp))
 
+count = 0
 
 for i in range(len(c) - 1):
     if c[i][0] == c[i + 1][0]:
-        c[i][-1] = S
-
+        c[i][-1] = sum(temp[count]) / len(temp[count])
+        c[i + 1][-1] = sum(temp[count]) / len(temp[count])
     if c[i][0] != c[i + 1][0] and c[i][0] == c[i - 1][0]:
-        c[i][-1] = S
-
+        c[i - 1][-1] = sum(temp[count]) / len(temp[count])
+        count += 1
 
 R = 0
 
@@ -54,8 +59,7 @@ else:
         if i[1] == 1:
             R += i[-1]
 
-
 print(R)
-print(S)
+# print(S)
 print(temp)
 print(c)
