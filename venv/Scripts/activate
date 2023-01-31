@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\python\codes\gen_algorythm_project\venv"
+VIRTUAL_ENV="C:\python\GitHub\genalgorythm_project\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

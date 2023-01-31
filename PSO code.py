@@ -5,103 +5,108 @@ import math
 import plotly.graph_objects as go
 import copy
 
-num_particles = int(input('Количество точек '))
-population_fitted = []
+
+num_particles = 32
+num_iterations = 10
+lim1 = -10
+lim2 = 10
 population = []
-part_cord_array = []
-lim1 = int(input('Первый лимит '))
-lim2 = int(input('Второй лимит '))
-best_position = -math.inf
-# best_swarm_position = -math.inf
-iterations = int((input('Количество итераций ')))
-Omega = 0.5671432904097838729999686622
-Phi = 0.618
-count = 0
-# velocity = random.uniform(-(lim2 - lim1), lim2 - lim1)
-velocity = 0
+temp_population = []
+temp_array = []
+Omega = 0.78
+c1 = 1.05
+c2 = 1.05
 
-# > --------------------------------------------------------------------
 
-def function(x):
-    return -(x - 2) ** 2
+
+def function(x, y):
+    # return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
+    # return -(((x ** 2) + 2) - ((y ** 2) + 2))
+    return ((x ** 2) + y - 11) ** 2 + (x + (y ** 2) - 7) ** 2
+def particle_best(particle):
+    best_p = -math.inf
+    for c in particle:
+        if c[2] > best_p and lim1 < c[0] < lim2 and lim1 < c[1] < lim2:
+            best_p = c[2]
+            best = c
+    return best
+
+
+def swarm_best(swarm):
+    best_s = -math.inf
+    for p in swarm:
+        if particle_best(p)[2] > best_s and lim1 < particle_best(p)[0] < lim2 and lim1 < particle_best(p)[1] < lim2:
+            best_s = particle_best(p)[2]
+            best_c = particle_best(p)
+    return best_c
 
 
 for i in range(num_particles):
-    population.append(part_cord_array)
-    part_cord_array = []
+    population.append([])
 
-temp_cords = []
-
-
+for i in range(num_particles):
+    temp_population.append([])
 
 
-
-def fitnes_swarm(swarm):  # лучшая позиция точки
-    best_s_position = -math.inf
-    for particle in swarm:
-        for x in particle:
-            if function(x) > function(best_s_position):
-                best_s_position = x
-                # print(best_position)
-    return best_s_position
-
-
-def fitness_particle(particle):
-    best_p_position = -math.inf
-    for x in particle:
-        if function(x) > function(best_p_position):
-            best_p_position = x
-    return best_p_position
+for p in population:
+    x = random.uniform(lim1, lim2)
+    y = random.uniform(lim1, lim2)
+    z = function(x, y)
+    vx = 0
+    vy = 0
+    temp_array = [x, y, z, vx, vy]
+    p.append(temp_array)
+    temp_array = []
 
 
-# > --------------------------------------------------------------------
-# начальная позиция точек
-for i in population:
-    i.append(random.uniform(lim1, lim2))
-velocity = random.uniform(-(lim2 - lim1), lim2 - lim1)
+# print(swarm_best(population))
+# for i in population:
+#     print(i)
+
+
+for i in range(100):
+    for p in range(len(population)):
+        vx = Omega * population[p][i][-2] + c1 * random.random() * (particle_best(population[p])[0] - population[p][i][0]) + c2 * random.random() + (swarm_best(population)[0] - population[p][i][0])
+        vy = Omega * population[p][i][-1] + c1 * random.random() * (particle_best(population[p])[1] - population[p][i][1]) + c2 * random.random() + (swarm_best(population)[1] - population[p][i][1])
+        x = vx + population[p][i][0]
+        y = vy + population[p][i][1]
+        z = function(x, y)
+        temp_array = [x, y, z, vx, vy]
+        temp_population[p].extend(temp_array)
+        temp_array = []
+        # print(vx, vy)
+        vx = 0
+        vy = 0
+
+
+    for el in range(len(population)):
+        population[el].append(temp_population[el])
+    temp_population = []
+    for i in range(num_particles):
+        temp_population.append([])
 
 
 
-
-# > --------------------------------------------------------------------
-for i in range(iterations):
-    Phi_p = 1
-    Phi_g = 1
-    for i in range(len(population)):
-        velocity_up = Omega * velocity + (Phi_p * random.random() * (fitness_particle(population[i]) - population[i][count])) + (Phi_g * random.random() * (fitnes_swarm(population) - population[i][count]))
-        temp_cords.append(population[i][count] + velocity_up)
-        velocity = velocity_up
-        population[i].append(temp_cords[i])
-
-    temp_cords = []
-    print(temp_cords)
-    count += 1
-    print(count, 'c')
-
-temp = []
-for i in population:
-    for g in i:
-        temp.append(function(g))
-    population_fitted.append(temp)
-    temp = []
-
-# > --------------------------------------------------------------------
 
 x = []
 y = []
+z = []
+
+for o in population:
+    x.append(particle_best(o)[0])
+    y.append(particle_best(o)[1])
+    z.append(particle_best(o)[2])
+
+
+fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
+
+x1 = np.outer(np.linspace(lim1, lim2, 100), np.ones(100))
+y1 = x1.copy().T
+z1 = function(x1, y1)
+fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Blues'))
+fig.show()
+
 
 for i in population:
-    x.append(fitness_particle(i))
-    y.append(function(fitness_particle(i)))
-
-fig = px.scatter(x=x, y=y)
-x_one = np.linspace(lim1, lim2, 100)
-y_one = []
-for i in x_one:
-    y_one.append(function(i))
-
-# for a, b in zip(x, y):
-#     print(a, b, '\n')
-
-fig.add_trace(go.Scatter(x=x_one, y=y_one))
-fig.show()
+    print(i)
+print(swarm_best(population))
