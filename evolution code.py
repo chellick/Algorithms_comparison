@@ -55,7 +55,7 @@ def function(x1, x2):
     # return -np.sin(10 * (x1 ** 2 + x2 ** 2))
     # return 0.1 * x1 ** 2 + 0.1 * x2 ** 2 - 4 * np.cos(0.8 * x1) - 4 * np.cos(0.8 * x2) + 8
     return  ((x1 ** 2) + x2 - 11) ** 2 + (x1 + (x2 ** 2) - 7) ** 2
-
+    # return -((x1 + x2) ** 2)
 def fitness_one(indiv):  # Значение Y (Z)
     s_indiv = "".join(map(str, indiv))
     int_individ_one = int(s_indiv[:len(s_indiv) // 2], 2)
