@@ -35,6 +35,7 @@ def fitness(indiv):
     z = function(x, y)
     return x, y, z
 
+
 def population_fitness(pop):
     if search_input == 'max':
         best = -math.inf
@@ -79,14 +80,10 @@ def child_creation(p1, p2):
     return child
 
 
-
-
 for i in range(len_population):
     population.append(create_individ(len_indiv))
 
 best_individs.append(population_fitness(population)[0])
-# for u in population:
-#     print(u, '1', end="\n")
 
 for i in range(iterations):
     if len(child_popultaion) == len(population):
@@ -101,28 +98,16 @@ for i in range(iterations):
         # print(fitness(first_parent)[2], fitness(second_parent)[2])
         child_popultaion.append(child_creation(first_parent, second_parent))
 
-        # print(len(child_popultaion))
-
-
-
-
-
-# print(population_fitness(population))
 x = []
 y = []
 z = []
-
 
 for i in best_individs:
     x.append(fitness(i)[0])
     y.append(fitness(i)[1])
     z.append(fitness(i)[2])
 
-# for a, b, c in zip(x, y, z):
-#     print(a, b, c, end='\n')
-
 fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
-
 
 x1 = np.outer(np.linspace(limit_one, limit_two, 100), np.ones(100))
 y1 = x1.copy().T
