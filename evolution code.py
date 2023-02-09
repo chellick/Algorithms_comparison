@@ -107,10 +107,21 @@ for i in best_individs:
     y.append(fitness(i)[1])
     z.append(fitness(i)[2])
 
+
+best_indiv = population_fitness(best_individs)[0]
+
+print([(fitness(best_indiv)[0])], [(fitness(best_indiv)[1])], [(fitness(best_indiv)[2])])
+
 fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
+fig.add_scatter3d(x=[(fitness(best_indiv)[0])],
+                  y=[(fitness(best_indiv)[1])],
+                  z=[(fitness(best_indiv)[2])])
 
 x1 = np.outer(np.linspace(limit_one, limit_two, 100), np.ones(100))
 y1 = x1.copy().T
 z1 = function(x1, y1)
-fig.add_trace(go.Surface(x=x1, y=y1, z=z1))
+fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Blues'))
+
+
 fig.show()
+
