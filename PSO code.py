@@ -20,9 +20,9 @@ c2 = 1.05
 
 
 def function(x, y):
-    # return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
+    return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
     # return -(((x ** 2) + 2) - ((y ** 2) + 2))
-    return ((x ** 2) + y - 11) ** 2 + (x + (y ** 2) - 7) ** 2
+    # return ((x ** 2) + y - 11) ** 2 + (x + (y ** 2) - 7) ** 2
 def particle_best(particle):
     best_p = -math.inf
     for c in particle:
@@ -57,11 +57,6 @@ for p in population:
     temp_array = [x, y, z, vx, vy]
     p.append(temp_array)
     temp_array = []
-
-
-# print(swarm_best(population))
-# for i in population:
-#     print(i)
 
 
 for i in range(100):
