@@ -6,16 +6,17 @@ import plotly.graph_objects as go
 import copy
 
 
-num_particles = 32
-num_iterations = 10
-lim1 = -10
-lim2 = 10
+num_particles = int(input('Количество точек: '))
+num_iterations = int(input('Количество итераций: '))
+lim1 = int(input('lim1: '))
+lim2 = int(input('lim2: '))
+search_input = input('max \ min: ')
 population = []
 temp_population = []
 temp_array = []
-Omega = 0.78
-c1 = 1.05
-c2 = 1.05
+Omega = 0.8
+c1 = 3.5
+c2 = 0.5
 
 
 
@@ -24,22 +25,37 @@ def function(x, y):
     # return -(((x ** 2) + 2) - ((y ** 2) + 2))
     # return ((x ** 2) + y - 11) ** 2 + (x + (y ** 2) - 7) ** 2
 def particle_best(particle):
-    best_p = -math.inf
-    for c in particle:
-        if c[2] > best_p and lim1 < c[0] < lim2 and lim1 < c[1] < lim2:
-            best_p = c[2]
-            best = c
-    return best
+    if search_input == 'max':
+        best_p = -math.inf
+        for c in particle:
+            if c[2] > best_p and lim1 <= c[0] <= lim2 and lim1 <= c[1] <= lim2:
+                best_p = c[2]
+                best = c
+        return best
+    elif search_input == 'min':
+        best_p = math.inf
+        for c in particle:
+            if c[2] < best_p and lim1 <= c[0] <= lim2 and lim1 <= c[1] <= lim2:
+                best_p = c[2]
+                best = c
+        return best
 
 
 def swarm_best(swarm):
-    best_s = -math.inf
-    for p in swarm:
-        if particle_best(p)[2] > best_s and lim1 < particle_best(p)[0] < lim2 and lim1 < particle_best(p)[1] < lim2:
-            best_s = particle_best(p)[2]
-            best_c = particle_best(p)
-    return best_c
-
+    if search_input == 'max':
+        best_s = -math.inf
+        for p in swarm:
+            if particle_best(p)[2] > best_s and lim1 <= particle_best(p)[0] <= lim2 and lim1 <= particle_best(p)[1] <= lim2:
+                best_s = particle_best(p)[2]
+                best_c = particle_best(p)
+        return best_c
+    elif search_input == 'min':
+        best_s = math.inf
+        for p in swarm:
+            if particle_best(p)[2] <= best_s and lim1 <= particle_best(p)[0] <= lim2 and lim1 <= particle_best(p)[1] <= lim2:
+                best_s = particle_best(p)[2]
+                best_c = particle_best(p)
+        return best_c
 
 for i in range(num_particles):
     population.append([])
@@ -59,7 +75,7 @@ for p in population:
     temp_array = []
 
 
-for i in range(100):
+for i in range(num_iterations - 1):
     for p in range(len(population)):
         vx = Omega * population[p][i][-2] + c1 * random.random() * (particle_best(population[p])[0] - population[p][i][0]) + c2 * random.random() + (swarm_best(population)[0] - population[p][i][0])
         vy = Omega * population[p][i][-1] + c1 * random.random() * (particle_best(population[p])[1] - population[p][i][1]) + c2 * random.random() + (swarm_best(population)[1] - population[p][i][1])
@@ -69,9 +85,12 @@ for i in range(100):
         temp_array = [x, y, z, vx, vy]
         temp_population[p].extend(temp_array)
         temp_array = []
-        # print(vx, vy)
         vx = 0
         vy = 0
+    Omega = 0.4 * ((num_iterations - i) / (num_iterations ** 2)) + 0.4
+    c1 = -3 * (i / num_iterations) + 3.5
+    c2 = 3 * (i / num_iterations) + 0.5
+    # print(c1, c2)
 
 
     for el in range(len(population)):
@@ -92,8 +111,17 @@ for o in population:
     y.append(particle_best(o)[1])
     z.append(particle_best(o)[2])
 
+best_particle = swarm_best(population)
+
+
+'''
+fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
 
 fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
+fig.add_scatter3d(x=[best_particle[0]],
+                  y=[best_particle[1]],
+                  z=[best_particle[2]])
+
 
 x1 = np.outer(np.linspace(lim1, lim2, 100), np.ones(100))
 y1 = x1.copy().T
@@ -101,7 +129,6 @@ z1 = function(x1, y1)
 fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Blues'))
 fig.show()
 
+'''
 
-for i in population:
-    print(i)
-print(swarm_best(population))
+print(best_particle)

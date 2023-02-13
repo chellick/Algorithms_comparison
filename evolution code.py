@@ -4,15 +4,14 @@ import math
 import plotly.express as px
 import plotly.graph_objects as go
 
-
 child_popultaion = []
 population = []
 len_indiv = int(input('Длина индивидов: '))
 len_population = int(input('Длина популяции: '))
 iterations = int(input('Количество итераций: '))
 mutation_probability = float(input('Вероятность мутации: '))
-limit_one = int(input('lim1: '))
-limit_two = int(input('lim2: '))
+limit_one = float(input('lim1: '))
+limit_two = float(input('lim2: '))
 search_input = input('max \ min: ')
 if search_input == 'max':
     best = -math.inf
@@ -21,8 +20,14 @@ elif search_input == 'min':
 
 best_individs = []
 
+
+
+best_iteration = [best, 0]
+
+
 def function(x, y):
-    return np.cos(x + y)
+    # return np.cos(x + y)
+    return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
 
 
 def fitness(indiv):
@@ -91,11 +96,20 @@ for i in range(iterations):
         population.extend(child_popultaion)
         child_popultaion = []
         best_individs.append(population_fitness(population)[0])
+        if search_input == 'max':
+            if population_fitness(population)[1] > best_iteration[0]:
+                best_iteration = [population_fitness(population)[1], i]
+            print(best_iteration)
 
-    for i in range(len_population):
-        first_parent = selection(population[random.randint(0, len_population - 1)], population[random.randint(0, len_population - 1)])
-        second_parent = selection(population[random.randint(0, len_population - 1)], population[random.randint(0, len_population - 1)])
-        # print(fitness(first_parent)[2], fitness(second_parent)[2])
+        elif search_input == 'min':
+            if population_fitness(population)[1] < best_iteration[0]:
+                best_iteration = [population_fitness(population)[1], i]
+
+    for r in range(len_population):
+        first_parent = selection(population[random.randint(0, len_population - 1)],
+                                 population[random.randint(0, len_population - 1)])
+        second_parent = selection(population[random.randint(0, len_population - 1)],
+                                  population[random.randint(0, len_population - 1)])
         child_popultaion.append(child_creation(first_parent, second_parent))
 
 x = []
@@ -106,7 +120,6 @@ for i in best_individs:
     x.append(fitness(i)[0])
     y.append(fitness(i)[1])
     z.append(fitness(i)[2])
-
 
 best_indiv = population_fitness(best_individs)[0]
 
@@ -122,6 +135,4 @@ y1 = x1.copy().T
 z1 = function(x1, y1)
 fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Blues'))
 
-
 fig.show()
-
