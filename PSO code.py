@@ -21,9 +21,11 @@ c2 = 0.5
 
 
 def function(x, y):
-    return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
+    return x ** 2 + y ** 2
+    # return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
     # return -(((x ** 2) + 2) - ((y ** 2) + 2))
     # return ((x ** 2) + y - 11) ** 2 + (x + (y ** 2) - 7) ** 2
+    # return x ** 2 + (y + 1) ** 2 - 5 * np.cos(1.5 * x + 1.5) - 3 * np.cos(2 * y - 1.5)
 def particle_best(particle):
     if search_input == 'max':
         best_p = -math.inf
@@ -114,7 +116,7 @@ for o in population:
 best_particle = swarm_best(population)
 
 
-'''
+
 fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
 
 fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
@@ -126,9 +128,9 @@ fig.add_scatter3d(x=[best_particle[0]],
 x1 = np.outer(np.linspace(lim1, lim2, 100), np.ones(100))
 y1 = x1.copy().T
 z1 = function(x1, y1)
-fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Blues'))
+fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Viridis'))
 fig.show()
 
-'''
+
 
 print(best_particle)
