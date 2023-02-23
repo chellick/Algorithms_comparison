@@ -1,0 +1,8 @@
+{
+    "python.analysis.typeCheckingMode": "off",
+    "editor.fontSize": 18,
+    "debug.console.fontSize": 17,
+    "markdown.preview.fontSize": 18,
+    "terminal.integrated.fontSize": 14,
+    "editor.suggestFontSize": 16
+}

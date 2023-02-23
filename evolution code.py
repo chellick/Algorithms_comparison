@@ -26,12 +26,12 @@ best_iteration = [best, 0]
 
 SConst = 0.05
 
-def function(x, y):
+def function(x: float, y: float) -> float:
     # return np.cos(x + y)
     return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
     # return x ** 2 + (y + 1) ** 2 - 5 * np.cos(1.5 * x + 1.5) - 3 * np.cos(2 * y - 1.5)
 
-def fitness(indiv):
+def fitness(indiv: list) -> tuple:
     s_indiv = "".join(map(str, indiv))
     i1 = int(s_indiv[:len(s_indiv) // 2], 2)
     i2 = int(s_indiv[len(s_indiv) // 2:], 2)
@@ -42,7 +42,7 @@ def fitness(indiv):
     return x, y, z
 
 
-def population_fitness(pop):
+def population_fitness(pop: list) -> tuple:
     if search_input == 'max':
         best = -math.inf
         for indiv in pop:
@@ -60,27 +60,27 @@ def population_fitness(pop):
         return best_indivd, best
 
 
-def create_individ(x):
+def create_individ(x: int) -> list:
     individ = []
     for _ in range(x):
         individ.append(random.randint(0, 1))
     return individ
 
 
-def selection(a, b):
+def selection(a:list, b:list) -> list:
     if fitness(a)[2] >= fitness(b)[2]:
         return a
     else:
         return b
 
-def get_av_fitness(population):
+def get_av_fitness(population: list) -> int:
     res = 0
     for individ in population:
         res += fitness(individ)[2]
     return res / len(population)
 
 
-def get_worst(population):
+def get_worst(population: list) -> list:
     if search_input == 'max':
         worst = (fitness(population[0])[2], 0)
         for ind in range(1, len(population)):
@@ -98,7 +98,7 @@ def get_worst(population):
 
 
 
-def child_creation(p1, p2):
+def child_creation(p1: list, p2: list) -> list:
     rand = random.randint(0, len_indiv - 1)
     fh = p1[:rand]
     sh = p2[rand::]
@@ -161,7 +161,7 @@ for i in best_individs:
 best_indiv = population_fitness(best_individs)[0]
 
 print([(fitness(best_indiv)[0])], [(fitness(best_indiv)[1])], [(fitness(best_indiv)[2])])
-'''
+
 fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
 fig.add_scatter3d(x=[(fitness(best_indiv)[0])],
                   y=[(fitness(best_indiv)[1])],
@@ -175,7 +175,7 @@ fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Viridis'))
 
 
 fig.show()
-'''
+
 
 
 
