@@ -20,13 +20,13 @@ c2 = 0.5
 
 
 
-def function(x, y):
+def function(x: float, y: float) -> float:
     return x ** 2 + y ** 2
     # return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
     # return -(((x ** 2) + 2) - ((y ** 2) + 2))
     # return ((x ** 2) + y - 11) ** 2 + (x + (y ** 2) - 7) ** 2
     # return x ** 2 + (y + 1) ** 2 - 5 * np.cos(1.5 * x + 1.5) - 3 * np.cos(2 * y - 1.5)
-def particle_best(particle):
+def particle_best(particle: tuple) -> tuple:
     if search_input == 'max':
         best_p = -math.inf
         for c in particle:
@@ -43,7 +43,7 @@ def particle_best(particle):
         return best
 
 
-def swarm_best(swarm):
+def swarm_best(swarm: list) -> tuple:
     if search_input == 'max':
         best_s = -math.inf
         for p in swarm:
@@ -134,3 +134,5 @@ fig.show()
 
 
 print(best_particle)
+
+

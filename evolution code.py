@@ -171,11 +171,4 @@ x1 = np.outer(np.linspace(limit_one, limit_two, 100), np.ones(100))
 y1 = x1.copy().T
 z1 = function(x1, y1)
 fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Viridis'))
-
-
-
 fig.show()
-
-
-
-
