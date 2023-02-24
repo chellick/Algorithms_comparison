@@ -4,7 +4,7 @@ import plotly.express as px
 import math
 import plotly.graph_objects as go
 import copy
-
+import plotly.io as pio
 
 num_particles = int(input('Количество точек: '))
 num_iterations = int(input('Количество итераций: '))
@@ -128,7 +128,17 @@ fig.add_scatter3d(x=[best_particle[0]],
 x1 = np.outer(np.linspace(lim1, lim2, 100), np.ones(100))
 y1 = x1.copy().T
 z1 = function(x1, y1)
-fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Viridis'))
+fig.add_trace(go.Surface(x=x1, y=y1, z=z1))
+
+
+pio.templates["custom_dark"] = pio.templates["plotly_dark"]
+pio.templates["custom_dark"]['layout']['paper_bgcolor'] = '#000000'
+pio.templates["custom_dark"]['layout']['plot_bgcolor'] = '#000000'
+pio.templates['custom_dark']['layout']['yaxis']['gridcolor'] = '#000000'
+pio.templates['custom_dark']['layout']['xaxis']['gridcolor'] = '#000000'
+
+fig.layout.template = 'custom_dark'
+
 fig.show()
 
 
