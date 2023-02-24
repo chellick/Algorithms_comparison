@@ -3,6 +3,9 @@ import random
 import math
 import plotly.express as px
 import plotly.graph_objects as go
+import plotly.io as pio
+import plotly.express as px
+
 
 child_popultaion = []
 population = []
@@ -23,10 +26,13 @@ best_individs = []
 mconst = mutation_probability
 
 best_iteration = [best, 0]
-
 SConst = 0.05
 
+
+mutation_list = []
+
 def function(x: float, y: float) -> float:
+    # return -(x ** 2 + y ** 2)
     # return np.cos(x + y)
     return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
     # return x ** 2 + (y + 1) ** 2 - 5 * np.cos(1.5 * x + 1.5) - 3 * np.cos(2 * y - 1.5)
@@ -126,21 +132,29 @@ for i in range(iterations):
             if population_fitness(population)[1] > best_iteration[0]:
                 best_iteration = [population_fitness(population)[1], i]
 
+            if get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+                mutation_probability += mconst * SConst
+            elif get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+                mutation_probability -= mconst * SConst 
+
 
         elif search_input == 'min':
             if population_fitness(population)[1] < best_iteration[0]:
                 best_iteration = [population_fitness(population)[1], i]
-        print(best_iteration)
+
+            if get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+                mutation_probability += mconst * SConst 
+            elif get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+                mutation_probability -= mconst * SConst 
+
+        # print(best_iteration)
+        mutation_list.append(mutation_probability)
 
 #---------------------------------------------------------------------------------------------------
 
-        if get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-            mutation_probability += mconst * SConst ** 2
-        elif get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-            mutation_probability -= mconst * SConst ** 2
         # print(mutation_probability)
         # # print(get_av_fitness(population))
-
+    
 # ---------------------------------------------------------------------------------------------------
     for r in range(len_population):
         first_parent = selection(population[random.randint(0, len_population - 1)],
@@ -148,6 +162,7 @@ for i in range(iterations):
         second_parent = selection(population[random.randint(0, len_population - 1)],
                                   population[random.randint(0, len_population - 1)])
         child_popultaion.append(child_creation(first_parent, second_parent))
+    
 
 x = []
 y = []
@@ -160,7 +175,12 @@ for i in best_individs:
 
 best_indiv = population_fitness(best_individs)[0]
 
-print([(fitness(best_indiv)[0])], [(fitness(best_indiv)[1])], [(fitness(best_indiv)[2])])
+print(float(fitness(best_indiv)[2]))
+
+
+# fig = px.line(y = mutation_list, x = range(0, len(mutation_list)))
+# fig.show()
+
 
 fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
 fig.add_scatter3d(x=[(fitness(best_indiv)[0])],
@@ -171,4 +191,19 @@ x1 = np.outer(np.linspace(limit_one, limit_two, 100), np.ones(100))
 y1 = x1.copy().T
 z1 = function(x1, y1)
 fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Viridis'))
+
+
+pio.templates["custom_dark"] = pio.templates["plotly_dark"]
+pio.templates["custom_dark"]['layout']['paper_bgcolor'] = '#000000'
+pio.templates["custom_dark"]['layout']['plot_bgcolor'] = '#000000'
+pio.templates['custom_dark']['layout']['yaxis']['gridcolor'] = '#000000'
+pio.templates['custom_dark']['layout']['xaxis']['gridcolor'] = '#000000'
+# pio.templates['custom_dark']['layout']['xaxis']['showgrid'] = False
+# pio.templates['custom_dark']['layout']['yaxis']['showgrid'] = False
+# pio.templates['custom_dark']['layout']['colorway']['tickcolor'] = '#000000'
+fig.layout.template = 'custom_dark'
+
 fig.show()
+
+
+
