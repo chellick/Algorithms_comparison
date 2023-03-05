@@ -21,11 +21,16 @@ c2 = 0.5
 
 
 def function(x: float, y: float) -> float:
-    return x ** 2 + y ** 2
+    # return x ** 2 + y ** 2
     # return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
     # return -(((x ** 2) + 2) - ((y ** 2) + 2))
     # return ((x ** 2) + y - 11) ** 2 + (x + (y ** 2) - 7) ** 2
     # return x ** 2 + (y + 1) ** 2 - 5 * np.cos(1.5 * x + 1.5) - 3 * np.cos(2 * y - 1.5)
+    return (x + y) ** 2 * (x + y) ** 2 
+    # return 10 * 2 + (x ** 2 - 10 * np.cos(2 * np.pi * x) + (y ** 2 - 10 * np.cos(2 * np.pi * y)))
+
+
+
 def particle_best(particle: tuple) -> tuple:
     if search_input == 'max':
         best_p = -math.inf
@@ -130,14 +135,13 @@ y1 = x1.copy().T
 z1 = function(x1, y1)
 fig.add_trace(go.Surface(x=x1, y=y1, z=z1))
 
+# pio.templates["custom_dark"] = pio.templates["plotly_dark"]
+# pio.templates["custom_dark"]['layout']['paper_bgcolor'] = '#000000'
+# pio.templates["custom_dark"]['layout']['plot_bgcolor'] = '#000000'
+# pio.templates['custom_dark']['layout']['yaxis']['gridcolor'] = '#000000'
+# pio.templates['custom_dark']['layout']['xaxis']['gridcolor'] = '#000000'
 
-pio.templates["custom_dark"] = pio.templates["plotly_dark"]
-pio.templates["custom_dark"]['layout']['paper_bgcolor'] = '#000000'
-pio.templates["custom_dark"]['layout']['plot_bgcolor'] = '#000000'
-pio.templates['custom_dark']['layout']['yaxis']['gridcolor'] = '#000000'
-pio.templates['custom_dark']['layout']['xaxis']['gridcolor'] = '#000000'
-
-fig.layout.template = 'custom_dark'
+# fig.layout.template = 'custom_dark'
 
 fig.show()
 
@@ -146,3 +150,14 @@ fig.show()
 print(best_particle)
 
 
+# 46.28902391955722
+# 46.28977479436523
+# 46.289520346678664
+# 46.28940098740459
+# 46.289783951435794
+# 46.28855562531273
+# 46.28951605555745
+# 46.2897733094083
+# 46.28968562248354
+# 46.28944537653324
+# 46.28927821001352

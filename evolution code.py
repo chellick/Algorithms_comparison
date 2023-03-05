@@ -31,11 +31,17 @@ SConst = 0.05
 
 mutation_list = []
 
+
 def function(x: float, y: float) -> float:
     # return -(x ** 2 + y ** 2)
     # return np.cos(x + y)
-    return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
+    # return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
     # return x ** 2 + (y + 1) ** 2 - 5 * np.cos(1.5 * x + 1.5) - 3 * np.cos(2 * y - 1.5)
+    # return -np.sin(10 * (x ** 2 + y ** 2))
+    # return 10 * 2 + ((y ** 2 - 10 * np.cos(2 * np.pi)) + (y ** 2 - 10 * np.cos(2 * np.pi)))
+    # return (x + y) ** 2 * (x + y) ** 2 
+    return 10 * 2 + (x ** 2 - 10 * np.cos(2 * np.pi * x) + (y ** 2 - 10 * np.cos(2 * np.pi * y)))
+
 
 def fitness(indiv: list) -> tuple:
     s_indiv = "".join(map(str, indiv))
@@ -132,20 +138,20 @@ for i in range(iterations):
             if population_fitness(population)[1] > best_iteration[0]:
                 best_iteration = [population_fitness(population)[1], i]
 
-            if get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-                mutation_probability += mconst * SConst
-            elif get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-                mutation_probability -= mconst * SConst 
+            # if get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+            #     mutation_probability += mconst * SConst
+            # elif get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+            #     mutation_probability -= mconst * SConst 
 
 
         elif search_input == 'min':
             if population_fitness(population)[1] < best_iteration[0]:
                 best_iteration = [population_fitness(population)[1], i]
 
-            if get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-                mutation_probability += mconst * SConst 
-            elif get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-                mutation_probability -= mconst * SConst 
+            # if get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+            #     mutation_probability += mconst * SConst 
+            # elif get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+            #     mutation_probability -= mconst * SConst 
 
         # print(best_iteration)
         mutation_list.append(mutation_probability)
@@ -193,17 +199,27 @@ z1 = function(x1, y1)
 fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Viridis'))
 
 
-pio.templates["custom_dark"] = pio.templates["plotly_dark"]
-pio.templates["custom_dark"]['layout']['paper_bgcolor'] = '#000000'
-pio.templates["custom_dark"]['layout']['plot_bgcolor'] = '#000000'
-pio.templates['custom_dark']['layout']['yaxis']['gridcolor'] = '#000000'
-pio.templates['custom_dark']['layout']['xaxis']['gridcolor'] = '#000000'
+# pio.templates["custom_dark"] = pio.templates["plotly_dark"]
+# pio.templates["custom_dark"]['layout']['paper_bgcolor'] = '#000000'
+# pio.templates["custom_dark"]['layout']['plot_bgcolor'] = '#000000'
+# pio.templates['custom_dark']['layout']['yaxis']['gridcolor'] = '#000000'
+# pio.templates['custom_dark']['layout']['xaxis']['gridcolor'] = '#000000'
 # pio.templates['custom_dark']['layout']['xaxis']['showgrid'] = False
 # pio.templates['custom_dark']['layout']['yaxis']['showgrid'] = False
-# pio.templates['custom_dark']['layout']['colorway']['tickcolor'] = '#000000'
-fig.layout.template = 'custom_dark'
+# # pio.templates['custom_dark']['layout']['colorway']['tickcolor'] = '#000000'
+# fig.layout.template = 'custom_dark'
 
 fig.show()
 
 
-
+# 46.28978566816091
+# 46.28978542327448
+# 46.289786206352694
+# 46.28978618209494
+# 46.289786140944
+# 46.28978618209494
+# 46.289785377914534
+# 46.28978598589301
+# 46.289786206352694
+# 46.28978571220181
+# 46.2897859372568
