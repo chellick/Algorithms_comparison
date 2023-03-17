@@ -1,4 +1,4 @@
-# First_gen_algorythm
+# Gen algorythm *VS* particle swarm optimisation
 gen_algorythm_update (pycharm ver.)
 
 
