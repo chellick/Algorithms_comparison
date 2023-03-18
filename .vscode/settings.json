@@ -4,5 +4,19 @@
     "debug.console.fontSize": 17,
     "markdown.preview.fontSize": 18,
     "terminal.integrated.fontSize": 14,
-    "editor.suggestFontSize": 16
+    "editor.suggestFontSize": 16,
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "local host",
+            "username": "root",
+            "database": "school"
+        }
+    ]
 }
