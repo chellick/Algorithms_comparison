@@ -2,17 +2,34 @@ from operator import attrgetter
 import numpy as np
 import random
 
+#--------------------------------------------------------------------------------------------
+# Inputs
+# len_indiv = int(input('Длина индивидов: '))
+# len_population = int(input('Длина популяции: '))
+# iterations = int(input('Количество итераций: '))
+# mutation_probability = float(input('Вероятность мутации: '))
+limit_one = float(input('lim1: '))
+limit_two = float(input('lim2: '))
+# search_input = input('max \ min: ')
+number_args = int(input('Количество аргументов: '))
 
 
 
-def create_individ(x: int) -> list:
+#--------------------------------------------------------------------------------------------
+# Static methods
+
+def create_individ(blength: int) -> list:
     individ = []
-    for _ in range(x):
+    for _ in range(blength):
         individ.append(random.randint(0, 1))
     return individ
 
-def function(*args):
+
+def function(args):
     return 10 * 2 + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1]) + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1])))
+    
+
+
 
 def split_array(arr, n):
     size = len(arr) // n
@@ -22,9 +39,26 @@ def split_array(arr, n):
     return result
 
 
-class Individ:
-    def __init__(self,):
-        
+def fitness(indiv: list) -> tuple:
+    s_indiv = "".join(map(str, indiv))
+    ints = []
+    floats = []
+    for i in split_array(s_indiv, number_args):
+        string = "".join(i)   
+        ints.append(int(string, 2))
+
+    
+    for f in ints:
+        floats.append((f / (2 ** (len(indiv) / 2) - 1)) * (limit_two - limit_one) + limit_one)
+    print(floats)
+    variable = function(floats)
+    return variable
+
+
+# print(fitness([1, 0, 0, 1, 0, 0, 1, 0, 1, 1]))
+
+
+
 
 class Population():
     def __init__(self, length=10, bit_length=10, mutation=0.1, args=[], nargs=2, lim1=0, lim2=10):
@@ -39,41 +73,24 @@ class Population():
 
 
     def get_attr(self):
-        return self.length, self.blength, self.array, self.mutation
+        return self.length, self.blength, self.mutation, self.args, self.lim1, self.lim2
     
+
     def population(self):
         return self.array
+
 
     def create_population(self):
         for _ in range(self.length):
             self.array.append(create_individ(self.blength))
         return 'Filled successfully'
     
-
-
-
-        return result
-
-
- 
- 
-
-
-
-    # def selection(self):
-    #     for individ
-
-
     
 
-    
+
 
 popul = Population()
 
 popul.create_population()
 
 print(popul.population())
-
-# print(popul.get_attr())
-# print()
-
