@@ -26,8 +26,9 @@ def create_individ(blength: int) -> list:
 
 
 def function(args):
-    return 10 * 2 + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1]) + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1])))
-    
+    # return 10 * 2 + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1]) + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1])))
+    # return np.sin(args[1]) + np.sin(args[2]) + np.sin(args[3]) + np.sin(args[0])
+    return sum(np.sin(x) for x in args)
 
 
 
@@ -39,28 +40,12 @@ def split_array(arr, n):
     return result
 
 
-def fitness(indiv: list) -> tuple:
-    s_indiv = "".join(map(str, indiv))
-    ints = []
-    floats = []
-    for i in split_array(s_indiv, number_args):
-        string = "".join(i)   
-        ints.append(int(string, 2))
-
-    for f in ints:
-        floats.append((f / (2 ** (len(indiv) / 2) - 1)) * (limit_two - limit_one) + limit_one)
-
-    variable = function(floats)
-    return variable
-
-
-# print(fitness([1, 0, 0, 1, 0, 0, 1, 0, 1, 1]))
-
+# TODO need to change this later >:D
 
 
 
 class Population():
-    def __init__(self, length=10, bit_length=10, mutation=0.1, args=[], nargs=2, lim1=0, lim2=10):
+    def __init__(self, length=10, bit_length=10, mutation=0.1, args=[], nargs=5, lim1=0, lim2=10):
         self.length = length
         self.blength = bit_length * nargs
         self.array = []
@@ -84,21 +69,43 @@ class Population():
             self.array.append(create_individ(self.blength))
         return 'Filled successfully'
     
+
+    def fitness(self, indiv): 
+        s_indiv = "".join(map(str, indiv))
+        ints = []
+        floats = []
+        for i in split_array(s_indiv, self.nargs):
+            string = "".join(i)   
+            ints.append(int(string, 2))
+
+        for f in ints:
+            floats.append((f / (2 ** (len(indiv) / 2) - 1)) * (self.lim2 - self.lim1) + self.lim1)
+
+        variable = function(floats)
+        return variable
+    
     
     def av_population_fitness(self):
         av = 0
         for i in self.array:
-            av += fitness(i)
+            av += self.fitness(i)
 
-        return av/ len(self.array)
-        
+        return av / len(self.array)
     
 
+popul = Population(nargs=number_args, lim1=limit_one, lim2=limit_two)
+child_population = Population()
 
-
-popul = Population()
 
 popul.create_population()
 
-print(popul.population())
+# print(popul.population())
+
+for i in popul.array:
+    print(i)
+
 print(popul.av_population_fitness())
+
+
+# 5.063656411886333
+# 5.063656411874998
