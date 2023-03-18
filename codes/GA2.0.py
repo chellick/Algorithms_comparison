@@ -88,7 +88,6 @@ class Population():
     
 
 
-
 popul = Population()
 
 popul.create_population()
