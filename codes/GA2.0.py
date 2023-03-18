@@ -47,10 +47,9 @@ def fitness(indiv: list) -> tuple:
         string = "".join(i)   
         ints.append(int(string, 2))
 
-    
     for f in ints:
         floats.append((f / (2 ** (len(indiv) / 2) - 1)) * (limit_two - limit_one) + limit_one)
-    print(floats)
+
     variable = function(floats)
     return variable
 
@@ -86,6 +85,15 @@ class Population():
         return 'Filled successfully'
     
     
+    def av_population_fitness(self):
+        av = 0
+        for i in self.array:
+            av += fitness(i)
+
+        return av/ len(self.array)
+        
+    
+
 
 
 popul = Population()
@@ -93,3 +101,4 @@ popul = Population()
 popul.create_population()
 
 print(popul.population())
+print(popul.av_population_fitness())
