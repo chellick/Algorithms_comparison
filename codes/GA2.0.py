@@ -7,15 +7,15 @@ import math
 # Inputs
 # len_indiv = int(input('Длина индивидов: '))
 # len_population = int(input('Длина популяции: '))
-# iterations = int(input('Количество итераций: '))
-# mutation_probability = float(input('Вероятность мутации: '))
+iterations = int(input('Количество итераций: '))
+mutation_probability = float(input('Вероятность мутации: '))
 # limit_one = float(input('lim1: '))
 # limit_two = float(input('lim2: '))
 # search_input = input('max \ min: ')
 number_args = int(input('Количество аргументов: '))
 
 
-
+mconst = mutation_probability
 #--------------------------------------------------------------------------------------------
 # Static methods
 
@@ -119,7 +119,7 @@ class Population():
     def create_c_population(self):
         for _ in range(self.length):
             self.child_array.append(self.child_creation())
-        return print("Child population created successfully")
+        return "Child population created successfully"
 
 
     def swap_population(self):
@@ -137,23 +137,21 @@ class Population():
 
         return b_individ, best
 
+    def mutation_change(self):
+        if self.av_population_fitness >= self.get_best_individ(self.array)[0] - self.get_best_individ(self.array)[0] * 0.05:
+            self.mutation += mconst * 0.05
+        elif self.av_population_fitness < self.get_best_individ(self.array)[0] - self.get_best_individ(self.array)[0] * 0.05:
+            self.mutation = mconst * 0.05
 
-popul = Population(nargs=number_args)
+
+
+popul = Population(nargs=number_args, iterations=iterations)
 popul.create_population()
 
 
 for i in range(popul.iterations):
     popul.create_c_population()
-    print(popul.av_population_fitness(popul.child_array))
-    print(popul.get_best_individ(popul.array), f"Best individ of {i} iteration ")
+    print(popul.av_population_fitness(popul.child_array), f"Av population fitness on {i} iteration")
+    print(popul.get_best_individ(popul.array)[1], f"Best individ of {i} iteration")
     popul.swap_population()
-
-
-# popul.create_population()
-# popul.create_c_population()
-# print(popul.av_population_fitness(popul.array))
-# print(popul.av_population_fitness(popul.child_array))
-# popul.swap_population()
-# print(popul.array)
-# print(popul.child_array)
 
