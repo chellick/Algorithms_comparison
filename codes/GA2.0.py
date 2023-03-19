@@ -49,6 +49,7 @@ class Population():
         self.length = length
         self.blength = bit_length * nargs
         self.array = []
+        self.child_array = []
         self.mutation = mutation
         self.args = args
         self.nargs = nargs
@@ -95,15 +96,10 @@ class Population():
 
 popul = Population(nargs=number_args, lim1=limit_one, lim2=limit_two)
 child_population = Population()
-
-
 popul.create_population()
 
 
-for i in popul.array:
-    print(i)
+# for i in popul.array:
+#     print(popul.fitness(i))
 
-print(popul.av_population_fitness()) #TODO: почему среднее находится по закону нормального распределения
-
-# [1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0,
-# [1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1,
+# print(popul.av_population_fitness(), "av population fit")
