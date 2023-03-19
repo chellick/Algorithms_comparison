@@ -1,6 +1,7 @@
 from operator import attrgetter
 import numpy as np
 import random
+import math
 
 #--------------------------------------------------------------------------------------------
 # Inputs
@@ -68,7 +69,7 @@ class Population():
     def create_population(self):
         for _ in range(self.length):
             self.array.append(create_individ(self.blength))
-        return print('Filled successfully')
+        return "Filled successfully"
     
 
     def fitness(self, indiv): 
@@ -124,15 +125,35 @@ class Population():
     def swap_population(self):
         self.array = self.child_array.copy()
         self.child_array = []
-        return print("Swapped successfully")
+        return "Swapped successfully"
+
+    def get_best_individ(self, array: list):
+        best = -math.inf
+        b_individ = []
+        for individ in array:
+            if self.fitness(individ) >= best:
+                best = self.fitness(individ)
+                b_individ = individ
+
+        return b_individ, best
 
 
 popul = Population(nargs=number_args)
 popul.create_population()
-popul.create_c_population()
-print(popul.av_population_fitness(popul.array))
-print(popul.av_population_fitness(popul.child_array))
-popul.swap_population()
-print(popul.array)
-print(popul.child_array)
+
+
+for i in range(popul.iterations):
+    popul.create_c_population()
+    print(popul.av_population_fitness(popul.child_array))
+    print(popul.get_best_individ(popul.array), f"Best individ of {i} iteration ")
+    popul.swap_population()
+
+
+# popul.create_population()
+# popul.create_c_population()
+# print(popul.av_population_fitness(popul.array))
+# print(popul.av_population_fitness(popul.child_array))
+# popul.swap_population()
+# print(popul.array)
+# print(popul.child_array)
 
