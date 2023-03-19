@@ -8,8 +8,8 @@ import random
 # len_population = int(input('Длина популяции: '))
 # iterations = int(input('Количество итераций: '))
 # mutation_probability = float(input('Вероятность мутации: '))
-limit_one = float(input('lim1: '))
-limit_two = float(input('lim2: '))
+# limit_one = float(input('lim1: '))
+# limit_two = float(input('lim2: '))
 # search_input = input('max \ min: ')
 number_args = int(input('Количество аргументов: '))
 
@@ -45,7 +45,7 @@ def split_array(arr, n):
 
 
 class Population():
-    def __init__(self, length=10, bit_length=10, mutation=0.1, args=[], nargs=3, lim1=0, lim2=10):
+    def __init__(self, iterations=10, length=10, bit_length=10, mutation=0.1, args=[], nargs=3, lim1=0, lim2=10):
         self.length = length
         self.blength = bit_length * nargs
         self.array = []
@@ -55,7 +55,7 @@ class Population():
         self.nargs = nargs
         self.lim1 = lim1
         self.lim2 = lim2
-
+        self.iterations = iterations
 
     def get_attr(self):
         return self.length, self.blength, self.mutation, self.args, self.lim1, self.lim2
@@ -68,7 +68,7 @@ class Population():
     def create_population(self):
         for _ in range(self.length):
             self.array.append(create_individ(self.blength))
-        return 'Filled successfully'
+        return print('Filled successfully')
     
 
     def fitness(self, indiv): 
@@ -86,20 +86,53 @@ class Population():
         return variable
     
     
-    def av_population_fitness(self):
+    def av_population_fitness(self, array):
         av = 0
-        for i in self.array:
+        for i in array:
             av += self.fitness(i)
-
-        return av / len(self.array)
+        return av / len(array)
     
+    
+    def selection(self, a, b):
+        if self.fitness(a) >= self.fitness(b):
+            return a
+        else:
+            return b
+        
 
-popul = Population(nargs=number_args, lim1=limit_one, lim2=limit_two)
-child_population = Population()
+    
+    def child_creation(self):
+        parent_1 = self.selection(self.array[random.randint(0, self.length - 1)], self.array[random.randint(0, self.length - 1)])
+        parent_2 = self.selection(self.array[random.randint(0, self.length - 1)], self.array[random.randint(0, self.length - 1)])
+        rand = random.randint(0, self.blength - 1)
+        fh = parent_1[:rand]
+        sh = parent_2[rand::]
+        child = fh + sh
+        for l in range(len(child)):
+            rand = random.random()
+            if rand <= self.mutation:
+                child[l] = 1 if child[l] == 0 else 0
+        return child
+
+
+    def create_c_population(self):
+        for _ in range(self.length):
+            self.child_array.append(self.child_creation())
+        return print("Child population created successfully")
+
+
+    def swap_population(self):
+        self.array = self.child_array.copy()
+        self.child_array = []
+        return print("Swapped successfully")
+
+
+popul = Population(nargs=number_args)
 popul.create_population()
+popul.create_c_population()
+print(popul.av_population_fitness(popul.array))
+print(popul.av_population_fitness(popul.child_array))
+popul.swap_population()
+print(popul.array)
+print(popul.child_array)
 
-
-# for i in popul.array:
-#     print(popul.fitness(i))
-
-# print(popul.av_population_fitness(), "av population fit")
