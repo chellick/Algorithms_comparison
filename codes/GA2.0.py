@@ -117,7 +117,7 @@ class Population():
         parent_2 = self.selection(self.array[random.randint(0, self.length - 1)], self.array[random.randint(0, self.length - 1)])
         rand = random.randint(0, self.blength - 1)
         fh = parent_1[:rand]
-        sh = parent_2[rand::]
+        sh = parent_2[rand::]   
         child = fh + sh
         for l in range(len(child)):
             rand = random.random()
@@ -155,6 +155,9 @@ class Population():
         elif self.av_population_fitness(array) < self.get_best_individ(array)[1] - self.get_best_individ(array)[1] * 0.05:
             self.mutation = mconst * 0.05
         
+
+    
+    def 
 
 
 
