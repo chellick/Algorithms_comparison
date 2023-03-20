@@ -64,7 +64,8 @@ class Population():
         self.bests = []
 
     def get_attr(self):
-        return self.length, self.blength, self.mutation, self.args, self.lim1, self.lim2
+        return self.__dict__
+        # return self.length, self.blength, self.mutation, self.args, self.lim1, self.lim2
     
 
     def population(self):
@@ -84,7 +85,7 @@ class Population():
         for i in split_array(s_indiv, self.nargs):
             string = "".join(i)   
             ints.append(int(string, 2))
-
+        
         for f in ints:
             floats.append((f / (2 ** (len(indiv) / 2) - 1)) * (self.lim2 - self.lim1) + self.lim1)
 
@@ -144,23 +145,35 @@ class Population():
         self.bests.append(best)
         return b_individ, best
 
+
     def mutation_change(self, array):
         if self.av_population_fitness(array) >= self.get_best_individ(array)[1] - self.get_best_individ(array)[1] * 0.05:
             self.mutation += mconst * 0.05
         elif self.av_population_fitness(array) < self.get_best_individ(array)[1] - self.get_best_individ(array)[1] * 0.05:
             self.mutation = mconst * 0.05
+        print(self.mutation)
 
 
 
-popul = Population(nargs=number_args, iterations=iterations, lim1=limit_one, lim2=limit_two, bit_length=len_indiv, length=len_population)
+popul = Population(nargs=number_args, iterations=iterations, lim1=limit_one, 
+                   lim2=limit_two, bit_length=len_indiv, length=len_population) #TODO remake names
+
+
+print(popul.get_attr())
+
+
 popul.create_population()
 
+for i in popul.array
 
+
+"""
 for i in range(popul.iterations):
-    popul.create_c_population()
+    
     print(popul.av_population_fitness(popul.array), f"Av population fitness on {i} iteration", "\n")
     print(popul.get_best_individ(popul.array)[1], f"Best individ of {i} iteration", "\n")
     popul.mutation_change(popul.array)
+    popul.create_c_population()
     popul.swap_population()
 
 
@@ -179,4 +192,4 @@ fig = go.Figure()
 fig.add_trace(line1)
 fig.add_trace(line2)
 fig.show()
-
+"""
