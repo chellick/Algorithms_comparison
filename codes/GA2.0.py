@@ -82,13 +82,16 @@ class Population():
         s_indiv = "".join(map(str, indiv))
         ints = []
         floats = []
+        
         for i in split_array(s_indiv, self.nargs):
             string = "".join(i)   
             ints.append(int(string, 2))
-        
+
+
         for f in ints:
             floats.append((f / (2 ** (len(indiv) / 2) - 1)) * (self.lim2 - self.lim1) + self.lim1)
 
+        
         variable = function(floats)
         return variable
     
@@ -151,7 +154,7 @@ class Population():
             self.mutation += mconst * 0.05
         elif self.av_population_fitness(array) < self.get_best_individ(array)[1] - self.get_best_individ(array)[1] * 0.05:
             self.mutation = mconst * 0.05
-        print(self.mutation)
+        
 
 
 
@@ -164,10 +167,17 @@ print(popul.get_attr())
 
 popul.create_population()
 
-for i in popul.array
+# for i in range(popul.iterations):
+#     print(list(map(popul.fitness, popul.array)), 'fitness')
+#     popul.create_c_population()
+#     print(popul.av_population_fitness(popul.array), f"Av population fitness on {i} iteration", "\n")
+#     print(popul.get_best_individ(popul.array)[1], f"Best individ of {i} iteration", "\n")
+#     popul.swap_population()
+#     popul.mutation_change(popul.array)
 
 
-"""
+
+
 for i in range(popul.iterations):
     
     print(popul.av_population_fitness(popul.array), f"Av population fitness on {i} iteration", "\n")
@@ -192,4 +202,5 @@ fig = go.Figure()
 fig.add_trace(line1)
 fig.add_trace(line2)
 fig.show()
-"""
+
+
