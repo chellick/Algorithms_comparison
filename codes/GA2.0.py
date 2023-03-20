@@ -2,15 +2,18 @@ from operator import attrgetter
 import numpy as np
 import random
 import math
+import plotly.express as px
+import plotly.graph_objects as go
+
 
 #--------------------------------------------------------------------------------------------
 # Inputs
-# len_indiv = int(input('Длина индивидов: '))
-# len_population = int(input('Длина популяции: '))
+len_indiv = int(input('Длина индивидов: '))
+len_population = int(input('Длина популяции: '))
 iterations = int(input('Количество итераций: '))
 mutation_probability = float(input('Вероятность мутации: '))
-# limit_one = float(input('lim1: '))
-# limit_two = float(input('lim2: '))
+limit_one = float(input('lim1: '))
+limit_two = float(input('lim2: '))
 # search_input = input('max \ min: ')
 number_args = int(input('Количество аргументов: '))
 
@@ -29,9 +32,9 @@ def create_individ(blength: int) -> list:
 def function(args):
     # return 10 * 2 + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1]) + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1])))
     # return np.sin(args[1]) + np.sin(args[2]) + np.sin(args[3]) + np.sin(args[0])
-    # return sum(np.sin(x) for x in args)
+    return sum(np.sin(x) for x in args)
     # return (args[0] ** 2) + (2 * args[1] ** 2) + (3 * args[2] ** 2)
-    return sum([(i+1)*x**2 for i, x in enumerate(args)])
+    # return sum([(i+1)*x**2 for i, x in enumerate(args)])
 
 
 
@@ -57,6 +60,8 @@ class Population():
         self.lim1 = lim1
         self.lim2 = lim2
         self.iterations = iterations
+        self.avarages = []
+        self.bests = []
 
     def get_attr(self):
         return self.length, self.blength, self.mutation, self.args, self.lim1, self.lim2
@@ -91,6 +96,7 @@ class Population():
         av = 0
         for i in array:
             av += self.fitness(i)
+        self.avarages.append(av / len(array))
         return av / len(array)
     
     
@@ -135,23 +141,42 @@ class Population():
                 best = self.fitness(individ)
                 b_individ = individ
 
+        self.bests.append(best)
         return b_individ, best
 
-    def mutation_change(self):
-        if self.av_population_fitness >= self.get_best_individ(self.array)[0] - self.get_best_individ(self.array)[0] * 0.05:
+    def mutation_change(self, array):
+        if self.av_population_fitness(array) >= self.get_best_individ(array)[1] - self.get_best_individ(array)[1] * 0.05:
             self.mutation += mconst * 0.05
-        elif self.av_population_fitness < self.get_best_individ(self.array)[0] - self.get_best_individ(self.array)[0] * 0.05:
+        elif self.av_population_fitness(array) < self.get_best_individ(array)[1] - self.get_best_individ(array)[1] * 0.05:
             self.mutation = mconst * 0.05
 
 
 
-popul = Population(nargs=number_args, iterations=iterations)
+popul = Population(nargs=number_args, iterations=iterations, lim1=limit_one, lim2=limit_two, bit_length=len_indiv, length=len_population)
 popul.create_population()
 
 
 for i in range(popul.iterations):
     popul.create_c_population()
-    print(popul.av_population_fitness(popul.child_array), f"Av population fitness on {i} iteration")
-    print(popul.get_best_individ(popul.array)[1], f"Best individ of {i} iteration")
+    print(popul.av_population_fitness(popul.array), f"Av population fitness on {i} iteration", "\n")
+    print(popul.get_best_individ(popul.array)[1], f"Best individ of {i} iteration", "\n")
+    popul.mutation_change(popul.array)
     popul.swap_population()
+
+
+
+x = np.linspace(0, iterations, iterations+1)
+y = popul.avarages
+x1 = np.linspace(0, iterations, iterations+1)
+y1 = popul.bests
+
+
+line1 = go.Scatter(x=x, y=y, mode='lines', name='avarage')
+line2 = go.Scatter(x=x1, y=y1, mode='lines', name='best')
+
+
+fig = go.Figure()
+fig.add_trace(line1)
+fig.add_trace(line2)
+fig.show()
 
