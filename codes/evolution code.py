@@ -40,8 +40,8 @@ def function(x: float, y: float) -> float:
     # return -np.sin(10 * (x ** 2 + y ** 2))
     # return 10 * 2 + ((y ** 2 - 10 * np.cos(2 * np.pi)) + (y ** 2 - 10 * np.cos(2 * np.pi)))
     # return (x + y) ** 2 * (x + y) ** 2 
-    return 10 * 2 + (x ** 2 - 10 * np.cos(2 * np.pi * x) + (y ** 2 - 10 * np.cos(2 * np.pi * y)))
-
+    # return 10 * 2 + (x ** 2 - 10 * np.cos(2 * np.pi * x) + (y ** 2 - 10 * np.cos(2 * np.pi * y)))
+    return x**2 + 2*y**2
 
 def fitness(indiv: list) -> tuple:
     s_indiv = "".join(map(str, indiv))
@@ -138,20 +138,20 @@ for i in range(iterations):
             if population_fitness(population)[1] > best_iteration[0]:
                 best_iteration = [population_fitness(population)[1], i]
 
-            # if get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-            #     mutation_probability += mconst * SConst
-            # elif get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-            #     mutation_probability -= mconst * SConst 
+            if get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+                mutation_probability += mconst * SConst
+            elif get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+                mutation_probability -= mconst * SConst 
 
 
         elif search_input == 'min':
             if population_fitness(population)[1] < best_iteration[0]:
                 best_iteration = [population_fitness(population)[1], i]
 
-            # if get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-            #     mutation_probability += mconst * SConst 
-            # elif get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
-            #     mutation_probability -= mconst * SConst 
+            if get_av_fitness(population) < population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+                mutation_probability += mconst * SConst 
+            elif get_av_fitness(population) > population_fitness(population)[1] - (population_fitness(population)[1] * SConst):
+                mutation_probability -= mconst * SConst 
 
         # print(best_iteration)
         mutation_list.append(mutation_probability)
