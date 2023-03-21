@@ -30,3 +30,11 @@ To solve the problem of finding local extrema of a function, an algorithm based 
 Items 2-5 are performed until the specified number of generations has passed.
 In the *FGEF* problem (finding the global extremum of a function), a binary string with a given length is taken as an individual. The characteristic of comparison, in turn, is the number of units in a given individual. The population is an array with N-specified number of elements.
 
+The birth of individuals of the next generation occurs as follows: several random individuals in the population are taken, strings are compared, the best (those with more units in the binary string are considered) representatives are selected as parents for crossing. Then the method of dividing both parents into parts is used (one part from the first parent, the second - the remainder from the second parent).
+
+Thus, a new generation is assembled, the same size as the previous one, and replaces it. In most cases, the highest quality individuals pass on their genes from generation to generation, due to which the quality of individuals from generation to generation improves each time.
+
+The number of individuals in one generation, the number of generations, the chance of mutation, and the limitations of the function are the adjustable parameters of the genetic algorithm.
+In the fitness function in GA, the x and y coordinates are given by the following formula:
+
+$$x;y\ =\ \left(\frac{m}{2^i-1}\right)\left(lim_1-lim_2\right)+lim_1$$
