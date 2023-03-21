@@ -65,7 +65,6 @@ class Population():
 
     def get_attr(self):
         return self.__dict__
-        # return self.length, self.blength, self.mutation, self.args, self.lim1, self.lim2
     
 
     def population(self):
