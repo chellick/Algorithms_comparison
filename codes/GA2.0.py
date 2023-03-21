@@ -47,7 +47,6 @@ def split_array(arr, n):
 
 
 
-
 class Population():
     def __init__(self, iterations=10, length=10, bit_length=10, mutation=0.1, args=[], nargs=3, lim1=0, lim2=10):
         self.length = length
@@ -62,6 +61,7 @@ class Population():
         self.iterations = iterations
         self.avarages = []
         self.bests = []
+
 
     def get_attr(self):
         return self.__dict__
@@ -110,7 +110,6 @@ class Population():
         else:
             return b
         
-
     
     def child_creation(self):
         parent_1 = self.selection(self.array[random.randint(0, self.length - 1)], self.array[random.randint(0, self.length - 1)])
@@ -137,6 +136,7 @@ class Population():
         self.child_array = []
         return "Swapped successfully"
 
+
     def get_best_individ(self, array: list):
         best = -math.inf
         b_individ = []
@@ -154,10 +154,6 @@ class Population():
             self.mutation += mconst * 0.05
         elif self.av_population_fitness(array) < self.get_best_individ(array)[1] - self.get_best_individ(array)[1] * 0.05:
             self.mutation = mconst * 0.05
-        
-
-    
-    def 
 
 
 
