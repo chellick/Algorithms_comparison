@@ -2,5 +2,6 @@
 gen_algorythm_update (pycharm ver.)
 
 
-https://github.com/chellick/First_gen_algorythm/blob/main/info/README.md
-#TODO form readme
+## Hypothesis
+
+My hypothesis is this: a population adapts better over generations than under the influence of social factors.
