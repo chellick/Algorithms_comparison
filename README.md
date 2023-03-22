@@ -167,11 +167,8 @@ A similar modification is used in order to expand the search area with a large c
 
 Comparison of optimization algorithms
 As a function that needs to be optimized, we will take the following formula:
-$$
 
-f\left(x,y\right)=0.1x^2+0.1y^2-4cos\left(0.8x\right)-4cos\left(0.8y\right)+8
-
-$$
+$$f\left(x,y\right)=0.1x^2+0.1y^2-4cos\left(0.8x\right)-4cos\left(0.8y\right)+8$$
 
 Initial parameters of GA (mod.):
 
