@@ -92,8 +92,9 @@ Having carried out all the necessary procedures with the data set, the statistic
 
 Next, it is necessary to calculate the critical boundaries $W_{left}$ and $W_{right}$, which are calculated in accordance with the formulas below:
 
-$$ W_{left}=\ int\left(\frac{n\left(m+n+1\right)-1}{2}-\psi\left(1-0.5Q\right)\sqrt{\frac{ mn\left(m+n+1\right)}{21}}\right)
-W_{right}=m\left(m+n+1\right)-W_{left} $$
+$$W_{left}=\ int\left(\frac{n\left(m+n+1\right)-1}{2}-\psi\left(1-0.5Q\right)\sqrt{\frac{ mn\left(m+n+1\right)}{21}}\right)
+W_{right}=m\left(m+n+1\right)-W_{left}$$
+
 Where
 
 * $\psi\left(1-0.5Q\right)$ – value of the inverse normal distribution function with parameters (0, 1);
