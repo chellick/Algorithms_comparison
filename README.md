@@ -4,9 +4,8 @@
 |---------|--------|
 |[Chellick](https://github.com/chellick)|diggerpotato173@gmail.com
 
-<<<<<<< HEAD
-=======
-## HowToUSe?
+
+## HowToUse?
 
 Visit [codes](https://github.com/chellick/GA_PSO_Comparing/tree/main/codes) section to choose the algorythm.
 Use valid Dtypes for all ```input``` statements. 
@@ -17,8 +16,6 @@ def function(self=None, x, y, args=None):
     return x**2 + y**2
 ```
 
-
->>>>>>> cf661c75487d19343b276a87aeaaab0ee5506789
 ## Hypothesis
 
 My hypothesis is that: a population adapts better over generations than under the influence of social factors.
