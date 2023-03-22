@@ -1,5 +1,8 @@
 # Gen algorythm *VS* particle swarm optimisation
 
+|Developer|Contacts|
+|---------|--------|
+|[Chellick](https://github.com/chellick)|diggerpotato173@gmail.com
 ## Hypothesis
 
 My hypothesis is that: a population adapts better over generations than under the influence of social factors.
