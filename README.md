@@ -1,5 +1,7 @@
 # Gen algorythm *VS* particle swarm optimisation
 
+
+
 ## Hypothesis
 
 My hypothesis is this: a population adapts better over generations than under the influence of social factors.
