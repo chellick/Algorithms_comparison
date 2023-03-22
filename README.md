@@ -3,6 +3,7 @@
 |Developer|Contacts|
 |---------|--------|
 |[Chellick](https://github.com/chellick)|diggerpotato173@gmail.com
+
 ## Hypothesis
 
 My hypothesis is that: a population adapts better over generations than under the influence of social factors.
@@ -78,8 +79,8 @@ In my opinion, it is much more appropriate to start a detailed description of th
 Having carried out all the necessary procedures with the data set, the statistics value was obtained equal to 36, after which it was necessary to choose the significance level Q, within the interval of boundaries of which the statistics value is included. In my case, this turned out to be the value $Q\ =\ 0.2.$
 
 Next, it is necessary to calculate the critical boundaries $W_{left}$ and $W_{right}$, which are calculated in accordance with the formulas below:
-$$
-W_{left}=\ int\left(\frac{n\left(m+n+1\right)-1}{2}-\psi\left(1-0.5Q\right)\sqrt{\frac{ mn\left(m+n+1\right)}{21}}\right)
+
+$$ W_{left}=\ int\left(\frac{n\left(m+n+1\right)-1}{2}-\psi\left(1-0.5Q\right)\sqrt{\frac{ mn\left(m+n+1\right)}{21}}\right)
 W_{right}=m\left(m+n+1\right)-W_{left} $$
 Where
 
@@ -95,7 +96,7 @@ $$
 
 And if the value of the function is not within the given vector, we can conclude: at a significance level $𝑄$, the samples are heterogeneous according to the Wil-Coxon test, which implies the superiority of the modified genetic algorithm over the classical one.
 
-## Comparing
+## Comparing GA
 
 | Modification                                               | Classic algorythm                                      |
 |------------------------------------------------------------|--------------------------------------------------------|
@@ -156,7 +157,7 @@ $$C_2^t=3\frac{t}{N}+0.5$$
 
 A similar modification is used in order to expand the search area with a large coefficient $C_1$ in the initial iterations, and then, when one of the points finds a global extremum, the swarm begins to strive towards this point with an increase in the coefficient $C_2$. It is also necessary to reduce the inertia coefficient $\omega$ to find the closest value to the global extremum.
 
-## Comparing
+## Comparing PSO
 
 |Mod PSO                                                    |Classic PSO                                           |
 |--------------------------------------------------------------|------------------------------------------------------|
