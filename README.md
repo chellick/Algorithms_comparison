@@ -13,8 +13,6 @@ You may also change optimised func, simply to retype something:
 ```python
 def function(self=None, x, y, args=None):
     return x**2 + y**2
-    
-
 ```
 
 
