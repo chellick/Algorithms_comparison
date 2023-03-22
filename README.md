@@ -191,6 +191,4 @@ Initial PSO parameters (mod.):
 * Lim2 - 13;
 * max.
 
-  ![image](https://user-images.githubusercontent.com/110192173/227039132-5ea3e52f-7b88-41d3-a637-692d492c09d0.png)
-![image](https://user-images.githubusercontent.com/110192173/227039195-da3959ec-ab7f-457c-9f25-ba2205380690.png)
 
