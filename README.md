@@ -192,3 +192,12 @@ Initial PSO parameters (mod.):
 * max.
 
 
+```plot
+xAxis:{domain:[-10,10]},
+yAxis:{domain:[-5,5]},
+grid:true,
+data: [
+{fn:'sin(x)',color:'darkred'},
+{fn:'x^2/5'}
+]
+```
