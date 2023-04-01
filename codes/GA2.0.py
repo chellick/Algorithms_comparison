@@ -162,12 +162,8 @@ popul = Population(nargs=number_args, iterations=iterations, lim1=limit_one,
                    lim2=limit_two, bit_length=len_indiv, length=len_population) 
 
 
-
 popul.create_population()
 print(popul.cycle(10))
-
-
-
 
 
 """
