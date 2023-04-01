@@ -40,8 +40,8 @@ def function(x: float, y: float) -> float:
     # return -np.sin(10 * (x ** 2 + y ** 2))
     # return 10 * 2 + ((y ** 2 - 10 * np.cos(2 * np.pi)) + (y ** 2 - 10 * np.cos(2 * np.pi)))
     # return (x + y) ** 2 * (x + y) ** 2 
-    # return 10 * 2 + (x ** 2 - 10 * np.cos(2 * np.pi * x) + (y ** 2 - 10 * np.cos(2 * np.pi * y)))
-    return x**2 + 2*y**2
+    return 10 * 2 + (x ** 2 - 10 * np.cos(2 * np.pi * x) + (y ** 2 - 10 * np.cos(2 * np.pi * y)))
+    # return x**2 + 2*y**2
 
 def fitness(indiv: list) -> tuple:
     s_indiv = "".join(map(str, indiv))
@@ -184,10 +184,6 @@ best_indiv = population_fitness(best_individs)[0]
 print(float(fitness(best_indiv)[2]))
 
 
-# fig = px.line(y = mutation_list, x = range(0, len(mutation_list)))
-# fig.show()
-
-
 fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
 fig.add_scatter3d(x=[(fitness(best_indiv)[0])],
                   y=[(fitness(best_indiv)[1])],
@@ -198,15 +194,5 @@ y1 = x1.copy().T
 z1 = function(x1, y1)
 fig.add_trace(go.Surface(x=x1, y=y1, z=z1, colorscale='Viridis'))
 
-
-# pio.templates["custom_dark"] = pio.templates["plotly_dark"]
-# pio.templates["custom_dark"]['layout']['paper_bgcolor'] = '#000000'
-# pio.templates["custom_dark"]['layout']['plot_bgcolor'] = '#000000'
-# pio.templates['custom_dark']['layout']['yaxis']['gridcolor'] = '#000000'
-# pio.templates['custom_dark']['layout']['xaxis']['gridcolor'] = '#000000'
-# pio.templates['custom_dark']['layout']['xaxis']['showgrid'] = False
-# pio.templates['custom_dark']['layout']['yaxis']['showgrid'] = False
-# # pio.templates['custom_dark']['layout']['colorway']['tickcolor'] = '#000000'
-# fig.layout.template = 'custom_dark'
 
 fig.show()
