@@ -33,7 +33,8 @@ def create_individ(blength: int) -> list:
 def function(args):
     # return 10 * 2 + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1]) + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[1])))
     # return np.sin(args[1]) + np.sin(args[2]) + np.sin(args[3]) + np.sin(args[0])
-    return sum(np.sin(x) for x in args)
+    # return sum(np.sin(x) for x in args)
+    return 10 * 2 + (args[0] ** 2 - 10 * np.cos(2 * np.pi * args[0]) + (args[1] ** 2 - 10 * np.cos(2 * np.pi * args[1])))
     # return (args[0] ** 2) + (2 * args[1] ** 2) + (3 * args[2] ** 2)
     # return sum([(i+1)*x**2 for i, x in enumerate(args)])
 
@@ -143,25 +144,33 @@ class Population():
         elif self.av_population_fitness(array) < self.get_best_individ(array)[1] - self.get_best_individ(array)[1] * 0.05:
             self.mutation = mconst * 0.05
 
+    def cycle(self, times):
+        bests = []
+        for t in range(times):
+            for i in range(popul.iterations):
+                popul.mutation_change(popul.array)
+                popul.create_c_population()
+                popul.swap_population()
+            bests.append(self.get_best_individ(self.array)[1])
+            self.array = []
+            self.create_population()
+
+        return bests
+
 
 popul = Population(nargs=number_args, iterations=iterations, lim1=limit_one,
-                   lim2=limit_two, bit_length=len_indiv, length=len_population)  # TODO remake names
+                   lim2=limit_two, bit_length=len_indiv, length=len_population) 
 
-
-print(popul.get_attr())
 
 
 popul.create_population()
-
-# for i in range(popul.iterations):
-#     print(list(map(popul.fitness, popul.array)), 'fitness')
-#     popul.create_c_population()
-#     print(popul.av_population_fitness(popul.array), f"Av population fitness on {i} iteration", "\n")
-#     print(popul.get_best_individ(popul.array)[1], f"Best individ of {i} iteration", "\n")
-#     popul.swap_population()
-#     popul.mutation_change(popul.array)
+print(popul.cycle(10))
 
 
+
+
+
+"""
 for i in range(popul.iterations):
 
     print(popul.av_population_fitness(popul.array),
@@ -187,3 +196,4 @@ fig = go.Figure()
 fig.add_trace(line1)
 fig.add_trace(line2)
 fig.show()
+"""
