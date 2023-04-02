@@ -147,13 +147,14 @@ class Population():
     def cycle(self, times):
         bests = []
         for t in range(times):
+            self.create_population()
             for i in range(popul.iterations):
-                popul.mutation_change(popul.array)
+                # popul.mutation_change(popul.array)
                 popul.create_c_population()
                 popul.swap_population()
             bests.append(self.get_best_individ(self.array)[1])
             self.array = []
-            self.create_population()
+            # self.create_population()
 
         return bests
 
@@ -162,8 +163,16 @@ popul = Population(nargs=number_args, iterations=iterations, lim1=limit_one,
                    lim2=limit_two, bit_length=len_indiv, length=len_population) 
 
 
-popul.create_population()
-print(popul.cycle(10))
+
+
+
+for i in range(10):
+    final = popul.cycle(10)
+    print(f"-------------- {i + 1} cycle -----------------")
+    for f in final:
+        print(f)
+
+    
 
 
 """
