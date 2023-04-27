@@ -19,14 +19,21 @@ c1 = 3.5
 c2 = 0.5
 
 
+# num_particles = 100
+# num_iterations = 100
+# lim1 = -10
+# lim2 = 10
+# search_input = "max"
+
+
 
 def function(x: float, y: float) -> float:
-    # return x ** 2 + y ** 2
+    return x ** 2 + y ** 2
     # return 0.1 * x ** 2 + 0.1 * y ** 2 - 4 * np.cos(0.8 * x) - 4 * np.cos(0.8 * y) + 8
     # return -(((x ** 2) + 2) - ((y ** 2) + 2))
     # return ((x ** 2) + y - 11) ** 2 + (x + (y ** 2) - 7) ** 2
     # return x ** 2 + (y + 1) ** 2 - 5 * np.cos(1.5 * x + 1.5) - 3 * np.cos(2 * y - 1.5)
-    return (x + y) ** 2 * (x + y) ** 2 
+    # return (x + y) ** 2 * (x + y) ** 2 
     # return 10 * 2 + (x ** 2 - 10 * np.cos(2 * np.pi * x) + (y ** 2 - 10 * np.cos(2 * np.pi * y)))
 
 
@@ -46,6 +53,9 @@ def particle_best(particle: tuple) -> tuple:
                 best_p = c[2]
                 best = c
         return best
+    
+    else:
+        raise 'Incorrect value for search input'
 
 
 def swarm_best(swarm: list) -> tuple:
@@ -63,63 +73,69 @@ def swarm_best(swarm: list) -> tuple:
                 best_s = particle_best(p)[2]
                 best_c = particle_best(p)
         return best_c
-
-for i in range(num_particles):
-    population.append([])
-
-for i in range(num_particles):
-    temp_population.append([])
+    
+    else:
+        raise 'Incorrect value for search input'
 
 
-for p in population:
-    x = random.uniform(lim1, lim2)
-    y = random.uniform(lim1, lim2)
-    z = function(x, y)
-    vx = 0
-    vy = 0
-    temp_array = [x, y, z, vx, vy]
-    p.append(temp_array)
-    temp_array = []
+for i in range(10):
+    for i in range(num_particles):
+        population.append([])
 
-
-for i in range(num_iterations - 1):
-    for p in range(len(population)):
-        vx = Omega * population[p][i][-2] + c1 * random.random() * (particle_best(population[p])[0] - population[p][i][0]) + c2 * random.random() + (swarm_best(population)[0] - population[p][i][0])
-        vy = Omega * population[p][i][-1] + c1 * random.random() * (particle_best(population[p])[1] - population[p][i][1]) + c2 * random.random() + (swarm_best(population)[1] - population[p][i][1])
-        x = vx + population[p][i][0]
-        y = vy + population[p][i][1]
-        z = function(x, y)
-        temp_array = [x, y, z, vx, vy]
-        temp_population[p].extend(temp_array)
-        temp_array = []
-        vx = 0
-        vy = 0
-    Omega = 0.4 * ((num_iterations - i) / (num_iterations ** 2)) + 0.4
-    c1 = -3 * (i / num_iterations) + 3.5
-    c2 = 3 * (i / num_iterations) + 0.5
-    # print(c1, c2)
-
-
-    for el in range(len(population)):
-        population[el].append(temp_population[el])
-    temp_population = []
     for i in range(num_particles):
         temp_population.append([])
 
 
+    for p in population:
+        x = random.uniform(lim1, lim2)
+        y = random.uniform(lim1, lim2)
+        z = function(x, y)
+        vx = 0
+        vy = 0
+        temp_array = [x, y, z, vx, vy]
+        p.append(temp_array)
+        temp_array = []
 
 
-x = []
-y = []
-z = []
+    for i in range(num_iterations - 1):
+        for p in range(len(population)):
+            vx = Omega * population[p][i][-2] + c1 * random.random() * (particle_best(population[p])[0] - population[p][i][0]) + c2 * random.random() + (swarm_best(population)[0] - population[p][i][0])
+            vy = Omega * population[p][i][-1] + c1 * random.random() * (particle_best(population[p])[1] - population[p][i][1]) + c2 * random.random() + (swarm_best(population)[1] - population[p][i][1])
+            x = vx + population[p][i][0]
+            y = vy + population[p][i][1]
+            z = function(x, y)
+            temp_array = [x, y, z, vx, vy]
+            temp_population[p].extend(temp_array)
+            temp_array = []
+            vx = 0
+            vy = 0
+        Omega = 0.4 * ((num_iterations - i) / (num_iterations ** 2)) + 0.4
+        c1 = -3 * (i / num_iterations) + 3.5
+        c2 = 3 * (i / num_iterations) + 0.5
+        
 
-for o in population:
-    x.append(particle_best(o)[0])
-    y.append(particle_best(o)[1])
-    z.append(particle_best(o)[2])
 
-best_particle = swarm_best(population)
+        for el in range(len(population)):
+            population[el].append(temp_population[el])
+        temp_population = []
+        for i in range(num_particles):
+            temp_population.append([])
 
+    
+
+    best_particle = swarm_best(population)
+    print(best_particle[2])
+    
+    population = []
+    temp_population = []
+    temp_array = []
+
+
+"""
+# for o in population:
+#     x.append(particle_best(o)[0])
+#     y.append(particle_best(o)[1])
+#     z.append(particle_best(o)[2])
 
 
 fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z, mode='markers')])
@@ -149,4 +165,4 @@ fig.show()
 
 print(best_particle)
 
-
+"""

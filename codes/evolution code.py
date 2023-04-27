@@ -80,10 +80,16 @@ def create_individ(x: int) -> list:
 
 
 def selection(a:list, b:list) -> list:
-    if fitness(a)[2] >= fitness(b)[2]:
-        return a
-    else:
-        return b
+    if search_input == 'max':
+        if fitness(a)[2] >= fitness(b)[2]:
+            return a
+        else:
+            return b
+    elif search_input == 'min':
+        if fitness(a)[2] <= fitness(b)[2]:
+            return a
+        else:
+            return b
 
 def get_av_fitness(population: list) -> int:
     res = 0
