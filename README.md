@@ -1,4 +1,4 @@
-# Gen algorythm *VS* particle swarm optimisation
+# Gen algorithm *VS* particle swarm optimisation
 
 |Developer|Contacts|
 |---------|--------|
